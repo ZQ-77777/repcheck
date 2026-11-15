@@ -1,0 +1,269 @@
+{
+  "source_file": "e2_board_payout.pdf",
+  "content_hash": "00a8cbd7654ead92de617cf60888aba5bd514559be8af225059b16ea3aad9b17",
+  "table": {
+    "label": "Table 2",
+    "number": 2,
+    "pages": [
+      3
+    ],
+    "caption": "TABLE II: Board Independence and Dividend Payout",
+    "notes": "Notes: This table reports OLS estimates of the payout regression. t-statistics are reported in parentheses. ***, **, * indicate p<0.01, p<0.05 and p<0.1."
+  },
+  "template": "regression",
+  "model_name": "mock: hand-written fixture — replace by a real live-mode run",
+  "items": [
+    {
+      "key": "sample_period",
+      "label": "Sample period",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "2005-2018",
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "Our sample spans 2005 to 2018.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "data_sources",
+      "label": "Data sources",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "Compustat (accounting data)",
+        "BoardEx (board composition)"
+      ],
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "Accounting data come from Compustat and board composition data come from BoardEx.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "sample_filters",
+      "label": "Sample filters",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "Require non-missing board data",
+        "Require positive total assets"
+      ],
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "We require firms to have non-missing board data and positive total assets.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "unit_of_observation",
+      "label": "Unit of observation",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "firm-year",
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "Each observation is a firm-year, and the final sample has 9,876 firm-years.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "dependent_var",
+      "label": "Dependent variable",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "PAYOUT: Common dividends (DVC) divided by income before extraordinary items (IB)",
+      "evidence": [
+        {
+          "page": 4,
+          "quote": "PAYOUT Common dividends (DVC) divided by income before extraordinary items (IB).",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "key_independent_vars",
+      "label": "Key independent variable(s)",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "BOARD_IND: Fraction of directors classified as independent in BoardEx"
+      ],
+      "evidence": [
+        {
+          "page": 4,
+          "quote": "BOARD_IND Fraction of directors classified as independent in BoardEx.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "controls",
+      "label": "Control variables",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "SIZE: Natural log of total assets (AT)",
+        "ROA: Income before extraordinary items (IB) divided by total assets (AT)",
+        "LEV: Total debt (DLTT + DLC) divided by total assets (AT) (column 2 only)"
+      ],
+      "evidence": [
+        {
+          "page": 4,
+          "quote": "SIZE Natural log of total assets (AT).",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 4,
+          "quote": "LEV Total debt (DLTT + DLC) divided by total assets (AT).",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "fixed_effects",
+      "label": "Fixed effects",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "Industry and year fixed effects",
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "All regressions include industry and year fixed effects",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "standard_errors",
+      "label": "Standard errors",
+      "required": true,
+      "extraction_status": "missing",
+      "value": null,
+      "evidence": [],
+      "hint": "Not found, and no related keywords in the paper. Papers usually report this in the table notes or the research design section. It may be genuinely unreported: mark 'Not in paper' and note it.",
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "model",
+      "label": "Estimation method",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "OLS",
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "We estimate OLS regressions of PAYOUT on BOARD_IND and firm characteristics.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "subsamples",
+      "label": "Subsamples / column structure",
+      "required": false,
+      "extraction_status": "verified",
+      "value": "Same sample in both columns; column 2 adds LEV as an additional control",
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "TABLE II reports the estimates with and without leverage as an additional control.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "winsorization",
+      "label": "Winsorization / outliers",
+      "required": false,
+      "extraction_status": "missing",
+      "value": null,
+      "evidence": [],
+      "hint": "Not found, and no related keywords in the paper. Papers usually report this in the Data/Sample section or the appendix. It may be genuinely unreported: mark 'Not in paper' and note it.",
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "sample_size",
+      "label": "Reported sample size",
+      "required": false,
+      "extraction_status": "verified",
+      "value": "9,876 firm-years",
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "the final sample has 9,876 firm-years",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    }
+  ],
+  "paper_title": "Board Independence and Dividend Payouts"
+}

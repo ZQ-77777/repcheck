@@ -1,0 +1,37 @@
+{
+  "paper": "e1_coverage_investment.pdf",
+  "table": "Table 3",
+  "annotator": "TODO: names of the two teammates who annotated and cross-checked",
+  "fields": {
+    "sample_period": "fiscal years 2003 to 2019",
+    "data_sources": [
+      "Compustat",
+      "CRSP",
+      "I/B/E/S"
+    ],
+    "sample_filters": [
+      "exclude financial firms SIC 6000-6999",
+      "exclude utilities SIC 4900-4999",
+      "non-missing values for all regression variables",
+      "lagged total assets at least $10 million"
+    ],
+    "unit_of_observation": "firm-year",
+    "dependent_var": "INVEST: capital expenditures CAPX in t+1 divided by total assets AT in t",
+    "key_independent_vars": [
+      "COVERAGE: log of one plus number of analysts with annual EPS forecast I/B/E/S"
+    ],
+    "controls": [
+      "SIZE: log total assets",
+      "LEV: DLTT + DLC divided by AT",
+      "MTB: PRCC_F x CSHO divided by CEQ",
+      "CASH: CHE divided by AT",
+      "ROA: IB divided by AT"
+    ],
+    "fixed_effects": "firm and year fixed effects",
+    "standard_errors": "clustered at the firm level",
+    "model": "OLS",
+    "subsamples": "same sample; column 1 COVERAGE only; column 2 adds SIZE, LEV, MTB; column 3 adds CASH, ROA",
+    "winsorization": "continuous variables winsorized at the 1st and 99th percentiles of annual distributions",
+    "sample_size": "24,318 firm-year observations"
+  }
+}

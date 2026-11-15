@@ -1,0 +1,5 @@
+{
+  "cache_key": "table_00a8cbd7654e_table2_v1",
+  "model": "hand-written fixture — replace by a real live-mode run",
+  "response": "{\n \"columns\": [\n  {\n   \"label\": \"(1)\",\n   \"dependent_var\": \"PAYOUT\",\n   \"paren_kind\": \"t\",\n   \"n\": \"9,876\",\n   \"rows\": [\n    {\n     \"variable\": \"BOARD_IND\",\n     \"coef\": \"0.0842***\",\n     \"paren\": \"(3.12)\"\n    },\n    {\n     \"variable\": \"SIZE\",\n     \"coef\": \"0.0105**\",\n     \"paren\": \"(2.21)\"\n    },\n    {\n     \"variable\": \"ROA\",\n     \"coef\": \"0.2290***\",\n     \"paren\": \"(4.05)\"\n    }\n   ]\n  },\n  {\n   \"label\": \"(2)\",\n   \"dependent_var\": \"PAYOUT\",\n   \"paren_kind\": \"t\",\n   \"n\": \"9,876\",\n   \"rows\": [\n    {\n     \"variable\": \"BOARD_IND\",\n     \"coef\": \"0.0617**\",\n     \"paren\": \"(2.34)\"\n    },\n    {\n     \"variable\": \"SIZE\",\n     \"coef\": \"0.0098**\",\n     \"paren\": \"(2.05)\"\n    },\n    {\n     \"variable\": \"ROA\",\n     \"coef\": \"0.2154***\",\n     \"paren\": \"(3.87)\"\n    },\n    {\n     \"variable\": \"LEV\",\n     \"coef\": \"-0.0731**\",\n     \"paren\": \"(-2.18)\"\n    }\n   ]\n  }\n ]\n}"
+}

@@ -1,0 +1,300 @@
+{
+  "source_file": "e1_coverage_investment.pdf",
+  "content_hash": "b53ba8a0182a68fa8a0c08fd0c613788f947c147c5a7f5fd7de255f693fe47e2",
+  "table": {
+    "label": "Table 3",
+    "number": 3,
+    "pages": [
+      4
+    ],
+    "caption": "Table 3 Analyst Coverage and Corporate Investment",
+    "notes": "This table reports OLS regressions of next-year investment on analyst coverage. Variables are defined in Appendix A. Standard errors clustered by firm are reported in parentheses. ***, **, and * denote significance at the 1%, 5%, and 10% levels, respectively."
+  },
+  "template": "regression",
+  "model_name": "mock: hand-written fixture — replace by a real live-mode run",
+  "items": [
+    {
+      "key": "sample_period",
+      "label": "Sample period",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "2003-2019",
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "Our sample covers fiscal years 2003 to 2019.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "confirmed",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "data_sources",
+      "label": "Data sources",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "Compustat (financial statements)",
+        "CRSP (stock prices)",
+        "I/B/E/S (analyst coverage)"
+      ],
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "We obtain financial statement data from Compustat, stock price data from CRSP, and analyst coverage from I/B/E/S.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "confirmed",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "sample_filters",
+      "label": "Sample filters",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "Exclude financial firms (SIC 6000-6999)",
+        "Exclude utilities (SIC 4900-4999)",
+        "Require non-missing values for all regression variables",
+        "Require lagged total assets of at least $10 million"
+      ],
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "We exclude financial firms (SIC codes 6000-6999) and utilities (SIC codes 4900-4999)",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 2,
+          "quote": "We require non-missing values for all regression variables and lagged total assets of at least $10 million.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "confirmed",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "unit_of_observation",
+      "label": "Unit of observation",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "firm-year",
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "The unit of observation is the firm-year.",
+          "verified": true,
+          "page_corrected": true
+        }
+      ],
+      "hint": "Page number corrected to p.2.",
+      "review_status": "confirmed",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "dependent_var",
+      "label": "Dependent variable",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "INVEST: Capital expenditures (CAPX) in year t+1 divided by total assets (AT) in year t",
+      "evidence": [
+        {
+          "page": 5,
+          "quote": "INVEST Capital expenditures (CAPX) in year t+1 divided by total assets (AT) in year t.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "confirmed",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "key_independent_vars",
+      "label": "Key independent variable(s)",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "COVERAGE: Natural log of one plus the number of analysts with an annual EPS forecast (I/B/E/S)"
+      ],
+      "evidence": [
+        {
+          "page": 5,
+          "quote": "COVERAGE Natural log of one plus the number of analysts with an annual EPS forecast (I/B/E/S).",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "confirmed",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "controls",
+      "label": "Control variables",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "SIZE: Natural log of total assets (AT)",
+        "LEV: Long-term debt plus debt in current liabilities (DLTT + DLC) divided by AT",
+        "MTB: Market value of equity (PRCC_F x CSHO) divided by book equity (CEQ)",
+        "CASH: Cash and short-term investments (CHE) divided by AT",
+        "ROA: Income before extraordinary items (IB) divided by AT"
+      ],
+      "evidence": [
+        {
+          "page": 5,
+          "quote": "SIZE Natural log of total assets (AT).",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 5,
+          "quote": "ROA Income before extraordinary items (IB) divided by AT.",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 3,
+          "quote": "Column (2) adds SIZE, LEV and MTB, and column (3) further adds CASH and ROA.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "confirmed",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "fixed_effects",
+      "label": "Fixed effects",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "Firm and year fixed effects",
+      "evidence": [
+        {
+          "page": 3,
+          "quote": "Firm fixed effects absorb time-invariant differences in investment policy, and year fixed effects absorb aggregate shocks.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "confirmed",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "standard_errors",
+      "label": "Standard errors",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "Clustered at the firm level",
+      "evidence": [
+        {
+          "page": 3,
+          "quote": "Standard errors are clustered at the firm level.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "confirmed",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "model",
+      "label": "Estimation method",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "OLS",
+      "evidence": [
+        {
+          "page": 3,
+          "quote": "We estimate all models using ordinary least squares (OLS).",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "confirmed",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "subsamples",
+      "label": "Subsamples / column structure",
+      "required": false,
+      "extraction_status": "verified",
+      "value": "Same sample in all columns; column 1 includes only COVERAGE, column 2 adds SIZE, LEV and MTB, column 3 adds CASH and ROA",
+      "evidence": [
+        {
+          "page": 3,
+          "quote": "Column (2) adds SIZE, LEV and MTB, and column (3) further adds CASH and ROA.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "confirmed",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "winsorization",
+      "label": "Winsorization / outliers",
+      "required": false,
+      "extraction_status": "unverified",
+      "value": "Continuous variables winsorized at the 1% and 99% levels",
+      "evidence": [
+        {
+          "page": 2,
+          "quote": "All continuous variables are winsorized at 1% and 99% to remove outliers.",
+          "verified": false,
+          "page_corrected": false
+        }
+      ],
+      "hint": "1 quote(s) could not be found in the PDF text — the value may be paraphrased or invented. Check p.2 before confirming.",
+      "review_status": "edited",
+      "user_value": "All continuous variables winsorized at the 1st and 99th percentiles of their annual distributions",
+      "user_note": "Quote not found; corrected from p.2"
+    },
+    {
+      "key": "sample_size",
+      "label": "Reported sample size",
+      "required": false,
+      "extraction_status": "verified",
+      "value": "24,318 firm-year observations",
+      "evidence": [
+        {
+          "page": 4,
+          "quote": "Observations 24,318 24,318 24,318",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "confirmed",
+      "user_value": null,
+      "user_note": null
+    }
+  ],
+  "paper_title": "Analyst Coverage and Corporate Investment"
+}

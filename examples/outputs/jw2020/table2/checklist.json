@@ -1,0 +1,313 @@
+{
+  "source_file": "jw2020.pdf",
+  "content_hash": "dcca6cebd11920be32670695a2854f4fabba14e7aa4250b59f6282f063de923d",
+  "table": {
+    "label": "Table 2",
+    "number": 2,
+    "pages": [
+      11
+    ],
+    "caption": "Table2 Feedback effects of market reaction to capex forecasts",
+    "notes": ""
+  },
+  "template": "regression",
+  "model_name": "deepseek/deepseek-v4-flash-0731",
+  "items": [
+    {
+      "key": "sample_period",
+      "label": "Sample period",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "2003-2015",
+      "evidence": [
+        {
+          "page": 8,
+          "quote": "The final sample comprises 17,577 capex forecasts made by 1,790 unique firms over the period 2003 to 2015.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "data_sources",
+      "label": "Data sources",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "IBES Guidance",
+        "Compustat",
+        "CRSP"
+      ],
+      "evidence": [
+        {
+          "page": 8,
+          "quote": "capex forecasts from IBES Guidance, accounting data from Compustat, stock price data from CRSP",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "sample_filters",
+      "label": "Sample filters",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "Firms making annual capex forecasts as covered by IBES, matched to Compustat using IBES linkfile (initial sample 40,785 forecasts, 2002-2016)",
+        "Matched with CRSP to obtain short-window market reaction on issuance date (36,900 forecasts)",
+        "Deleted 17,473 forecasts made concurrently with an earnings forecast",
+        "Deleted 1,850 forecasts made in 2016 because actual capital expenditure data as of end of year are needed",
+        "Final sample 17,577 capex forecasts by 1,790 unique firms, 2003-2015"
+      ],
+      "evidence": [
+        {
+          "page": 8,
+          "quote": "we begin with firms making annual capex forecasts (as covered by IBES) and match these firms to Compustat using the IBES linkfile. This gives us an initial sample of 40,785 forecasts between the years 2002 and 2016",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 8,
+          "quote": "Matching these forecasts with CRSP to obtain short-window market reaction (on the issuance date) reduces the sample to 36,900 forecasts.",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 8,
+          "quote": "We delete 17,473 forecasts that are made concurrently with an earnings forecast and another 1,850 that are made in 2016 because we need actual capital expenditure data as of the end of the year.",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 8,
+          "quote": "The final sample comprises 17,577 capex forecasts made by 1,790 unique firms over the period 2003 to 2015.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "unit_of_observation",
+      "label": "Unit of observation",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "firm-quarter",
+      "evidence": [
+        {
+          "page": 8,
+          "quote": "Our unit of observation in most tables is a firm-quarter.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "dependent_var",
+      "label": "Dependent variable",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "CAPEX_ADJ: percentage deviation of actual capex from forecasted capex scaled by the latter",
+      "evidence": [
+        {
+          "page": 11,
+          "quote": "The dependent variable is capex adjustments (CAPEX_ADJ) defined as the percentage deviation of actual capex from forecasted capex scaled by the latter.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "key_independent_vars",
+      "label": "Key independent variable(s)",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "CAR: cumulative abnormal return (firm return minus S&P500 index return) over the 5 days surrounding the capex forecast date; standardized to zero mean and unit standard deviation",
+        "SF_CAR: market reaction to sales forecasts made for the same fiscal period and closest to the capex forecast; standardized to zero mean and unit standard deviation",
+        "MKTRET: market returns on the forecast date; standardized to zero mean and unit standard deviation",
+        "CAR_PRE: pseudo-market reactions around a nonforecast date; standardized to zero mean and unit standard deviation"
+      ],
+      "evidence": [
+        {
+          "page": 8,
+          "quote": "CAR, defined as the cumulative abnormal return (i.e., firm return minus S&P500 index return) over the 5 days surrounding the capex forecast date (i.e., days [-2, 2] relative to the forecast date).",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 11,
+          "quote": "SF_CAR denotes market reaction to sales forecasts made for the same fiscal period and closest to the capex forecast.",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 11,
+          "quote": "MKTRET denotes market returns on the forecast date. CAR_PRE denotes pseudo-market reactions around a nonforecast date.",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 11,
+          "quote": "CAR, SF_CAR, MKTRET, and CAR_PRE have been standardized to have zero means and unit standard deviations.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "controls",
+      "label": "Control variables",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "SIZE: log of market value of equity",
+        "LAG_CAPX: most recent year's annual capex scaled by start of year market value",
+        "SURP: earnings surprise for the most recent quarter defined as the quarter's earnings-per-share minus that of the same quarter of the previous year",
+        "EA_DUM: indicator for capex announcements accompanied by earnings announcements"
+      ],
+      "evidence": [
+        {
+          "page": 8,
+          "quote": "size, defined as the log of market value of equity (SIZE)",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 11,
+          "quote": "LAG_CAPX denotes the most recent year's annual capex scaled by start of year market value.",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 11,
+          "quote": "SURP denotes earnings surprise for the most recent quarter defined as the quarter's earnings-per-share minus that of the same quarter of the previous year.",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 11,
+          "quote": "EA_DUM is an indicator to denote capex announcements accompanied by earnings announcements.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "fixed_effects",
+      "label": "Fixed effects",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "None in Models 1-2; year-quarter in Model 3; firm and year-quarter in Models 4-8",
+      "evidence": [
+        {
+          "page": 11,
+          "quote": "Model3 includes year-quarter fixed effects, whereas Models4to8includefirmandyear-quarterfixedeffects.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "standard_errors",
+      "label": "Standard errors",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "Clustered by firm in Models 1-4; clustered by industry in Models 5-8",
+      "evidence": [
+        {
+          "page": 11,
+          "quote": "Robust standard errors are clustered by firm in Models 1 to 4 and by industry in Models 5 to 8 and are tabulated under the coefficients in parentheses.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "model",
+      "label": "Estimation method",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "OLS",
+      "evidence": [
+        {
+          "page": 10,
+          "quote": "we regress the percentage deviation between the annual capex and the forecasted amount (i.e., CAPEX_ADJ) on the market reaction to the capex forecast (i.e., CAR).",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "winsorization",
+      "label": "Winsorization / outliers",
+      "required": false,
+      "extraction_status": "missing",
+      "value": null,
+      "evidence": [],
+      "hint": "Not found, and no related keywords in the paper. Papers usually report this in the Data/Sample section or the appendix. It may be genuinely unreported: mark 'Not in paper' and note it.",
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "sample_size",
+      "label": "Reported sample size",
+      "required": false,
+      "extraction_status": "verified",
+      "value": "17,577 for most models; 3,456 in Model 6; 17,505 in Model 8",
+      "evidence": [
+        {
+          "page": 11,
+          "quote": "Obs. 17,577 17,577 17,577 17,577 17,577 3,456 17,577 17,505",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    }
+  ],
+  "paper_title": "Should I Stay or Should I Grow? Using"
+}

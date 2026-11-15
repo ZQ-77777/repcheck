@@ -1,0 +1,147 @@
+{
+  "table_label": "Table 3",
+  "total_cells": 11,
+  "matched_cells": 7,
+  "discrepancies": [
+    {
+      "column": "(1)",
+      "variable": null,
+      "kind": "n_mismatch",
+      "severity": "major",
+      "paper": "24,318",
+      "replicated": "23,104",
+      "message": "N differs by -5.0%; coefficient differences in this column may follow from the sample difference.",
+      "suspects": [
+        "sample_filters",
+        "subsamples",
+        "sample_period",
+        "data_sources"
+      ],
+      "suspect_notes": [
+        "Sample filters: Exclude financial firms (SIC 6000-6999); Exclude utilities (SIC 4900-4999); Require non-missing values for all regression variables; Require lagged total assets of at least $10 million (p.2)",
+        "Subsamples / column structure: Same sample in all columns; column 1 includes only COVERAGE, column 2 adds SIZE, LEV and MTB, column 3 adds CASH and ROA (p.3)",
+        "Sample period: 2003-2019 (p.2)",
+        "Data sources: Compustat (financial statements); CRSP (stock prices); I/B/E/S (analyst coverage) (p.2)"
+      ]
+    },
+    {
+      "column": "(2)",
+      "variable": null,
+      "kind": "n_mismatch",
+      "severity": "major",
+      "paper": "24,318",
+      "replicated": "23,104",
+      "message": "N differs by -5.0%; coefficient differences in this column may follow from the sample difference.",
+      "suspects": [
+        "sample_filters",
+        "subsamples",
+        "sample_period",
+        "data_sources"
+      ],
+      "suspect_notes": [
+        "Sample filters: Exclude financial firms (SIC 6000-6999); Exclude utilities (SIC 4900-4999); Require non-missing values for all regression variables; Require lagged total assets of at least $10 million (p.2)",
+        "Subsamples / column structure: Same sample in all columns; column 1 includes only COVERAGE, column 2 adds SIZE, LEV and MTB, column 3 adds CASH and ROA (p.3)",
+        "Sample period: 2003-2019 (p.2)",
+        "Data sources: Compustat (financial statements); CRSP (stock prices); I/B/E/S (analyst coverage) (p.2)"
+      ]
+    },
+    {
+      "column": "(2)",
+      "variable": "MTB",
+      "kind": "significance",
+      "severity": "minor",
+      "paper": "0.0064*** (3 stars)",
+      "replicated": "2 stars",
+      "message": "Significance level differs — check standard errors / clustering.",
+      "suspects": [
+        "standard_errors",
+        "fixed_effects"
+      ],
+      "suspect_notes": [
+        "Standard errors: Clustered at the firm level (p.3)",
+        "Fixed effects: Firm and year fixed effects (p.3)"
+      ]
+    },
+    {
+      "column": "(3)",
+      "variable": null,
+      "kind": "n_mismatch",
+      "severity": "major",
+      "paper": "24,318",
+      "replicated": "23,104",
+      "message": "N differs by -5.0%; coefficient differences in this column may follow from the sample difference.",
+      "suspects": [
+        "sample_filters",
+        "subsamples",
+        "sample_period",
+        "data_sources"
+      ],
+      "suspect_notes": [
+        "Sample filters: Exclude financial firms (SIC 6000-6999); Exclude utilities (SIC 4900-4999); Require non-missing values for all regression variables; Require lagged total assets of at least $10 million (p.2)",
+        "Subsamples / column structure: Same sample in all columns; column 1 includes only COVERAGE, column 2 adds SIZE, LEV and MTB, column 3 adds CASH and ROA (p.3)",
+        "Sample period: 2003-2019 (p.2)",
+        "Data sources: Compustat (financial statements); CRSP (stock prices); I/B/E/S (analyst coverage) (p.2)"
+      ]
+    },
+    {
+      "column": "(3)",
+      "variable": "LEV",
+      "kind": "magnitude",
+      "severity": "major",
+      "paper": "-0.0398***",
+      "replicated": "-0.0286",
+      "message": "Magnitude differs by 28%.",
+      "suspects": [
+        "winsorization",
+        "subsamples",
+        "controls",
+        "sample_filters",
+        "fixed_effects"
+      ],
+      "suspect_notes": [
+        "Winsorization / outliers: Continuous variables winsorized at the 1% and 99% levels (p.2)",
+        "Subsamples / column structure: Same sample in all columns; column 1 includes only COVERAGE, column 2 adds SIZE, LEV and MTB, column 3 adds CASH and ROA (p.3)",
+        "Control variables: LEV: Long-term debt plus debt in current liabilities (DLTT + DLC) divided by AT (p.3, p.5)",
+        "Sample filters: Exclude financial firms (SIC 6000-6999); Exclude utilities (SIC 4900-4999); Require non-missing values for all regression variables; Require lagged total assets of at least $10 million (p.2)",
+        "Fixed effects: Firm and year fixed effects (p.3)"
+      ]
+    },
+    {
+      "column": "(3)",
+      "variable": "CASH",
+      "kind": "scale",
+      "severity": "major",
+      "paper": "0.0311**",
+      "replicated": "3.08",
+      "message": "Off by a factor of about 99 — likely a units/scaling difference (e.g. percent vs. fraction).",
+      "suspects": [
+        "dependent_var",
+        "key_independent_vars",
+        "controls"
+      ],
+      "suspect_notes": [
+        "Control variables: CASH: Cash and short-term investments (CHE) divided by AT (p.3, p.5)"
+      ]
+    },
+    {
+      "column": "(3)",
+      "variable": "ROA",
+      "kind": "variable_missing",
+      "severity": "major",
+      "paper": "0.0874***",
+      "replicated": null,
+      "message": "ROA is in the paper but not in the replication.",
+      "suspects": [
+        "controls",
+        "key_independent_vars"
+      ],
+      "suspect_notes": [
+        "Control variables: ROA: Income before extraordinary items (IB) divided by AT (p.3, p.5)"
+      ]
+    }
+  ],
+  "unverified_paper_numbers": [
+    "(2) LEV=-0.0452***"
+  ],
+  "overall": "major differences"
+}

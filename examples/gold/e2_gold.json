@@ -1,0 +1,32 @@
+{
+  "paper": "e2_board_payout.pdf",
+  "table": "Table 2",
+  "annotator": "TODO: names of the two teammates who annotated and cross-checked",
+  "fields": {
+    "sample_period": "2005 to 2018",
+    "data_sources": [
+      "Compustat",
+      "BoardEx"
+    ],
+    "sample_filters": [
+      "non-missing board data",
+      "positive total assets"
+    ],
+    "unit_of_observation": "firm-year",
+    "dependent_var": "PAYOUT: common dividends DVC divided by income before extraordinary items IB",
+    "key_independent_vars": [
+      "BOARD_IND: fraction of independent directors in BoardEx"
+    ],
+    "controls": [
+      "SIZE: log total assets AT",
+      "ROA: IB divided by AT",
+      "LEV: DLTT + DLC divided by AT"
+    ],
+    "fixed_effects": "industry and year fixed effects",
+    "standard_errors": null,
+    "model": "OLS",
+    "subsamples": "same sample; column 2 adds LEV as an additional control",
+    "winsorization": null,
+    "sample_size": "9,876 firm-years"
+  }
+}
