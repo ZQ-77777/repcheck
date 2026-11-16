@@ -62,7 +62,7 @@ Inputs, outputs and the full evaluation are in `examples/`.
 | f1: scanned PDF | Clear error: no text layer | — |
 | f2/f3: Table 9; malformed CSV | Lists available tables; names missing columns | — |
 
-The real paper's PDF and data are not included (copyright and WRDS licence); its outputs are in `examples/outputs/jw2020/`. The e1/e2 runs use mock answers, so they test our pipeline rather than the model. TODO: add live-mode figures from `scripts/run_examples.py --mode live`.
+The real paper's PDF is not included (copyright); its outputs are in `examples/outputs/jw2020/`. The e1/e2 runs use mock answers, so they test our pipeline rather than the model. TODO: add live-mode figures from `scripts/run_examples.py --mode live`.
 
 **Helps:** shows where each detail is stated and what is missing, and turns a mismatch into a short list of pages to re-read. **Needs improvement:** tables printed as images cannot be read; cause suggestions are heuristics, not proof; only a regression-table template exists so far.
 
