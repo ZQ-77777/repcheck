@@ -25,7 +25,7 @@ Question (identical for both, transcripts in `examples/outputs/baseline/`):
 | Unit of observation | correct (p.8) | correct (p.8) | correct, quote verified |
 | Dependent variable | correct (p.8) | correct (p.8) | correct, quote verified |
 | Key independent vars | correct | correct (p.14) | correct, quote verified |
-| Controls | correct | correct (p.14) | correct, quote verified |
+| Controls | mostly correct, but falsely claims MKTRET and CAR_PRE are "not in Table 3" — both are printed in every column of the table (p.14) | correct (p.14) | correct, quote verified |
 | Fixed effects | correct | correct (p.14) | correct, quote verified |
 | Standard errors | correct | correct (p.14) | correct, quote verified |
 | Estimation method | correct | correct ("implied", no page) | correct, quote verified |
@@ -39,17 +39,20 @@ though both mention the spread split in passing).
 
 | | gpt-4.1-mini raw | deepseek raw | RepCheck (deepseek + pipeline) |
 |---|---|---|---|
-| Content items correct | 10/11 | 11/11 | 12/12 (13 fields, 12 stated) |
+| Content items correct | 10/11 (controls right in part) | 11/11 | 12/12 (13 fields, 12 stated) |
 | Invented (paper silent, model answers anyway) | **1** | 0 | **0** — unreported fields are marked *not in paper* |
+| Factual slips inside "correct" answers | 1 (MKTRET/CAR_PRE claimed absent from Table 3) | 0 | n/a — every claim carries a verified quote |
 | Quotes to verify any answer | 0 | 0 | 26/26 verified by program (Table 2: 26/26, Table 3: 17/17) |
-| Page numbers | given, correct | given, correct (journal pagination) | given, verified/corrected by program |
+| Page numbers | given for all items, correct (a few cite adjacent pages, e.g. "8-9" for p.8) | given, all correct (journal pagination) | given, verified/corrected by program |
 
 ## Reading
 
 - A long-context model given the whole paper gets most items right in a single pass — the
-  content gap is small. The visible failure mode is **filling silence**: gpt-4.1-mini answers
-  the winsorization question with "standard practice" and even asserts the paper mentions it,
-  exactly the hallucination RepCheck's *not-in-paper* marker exists to prevent.
+  content gap is small. The visible failure modes are **filling silence** and **unchecked
+  detail**: gpt-4.1-mini answers the winsorization question with "standard practice" and even
+  asserts the paper mentions it (the paper never does), and it confidently claims two control
+  variables are absent from Table 3 while they are printed in every column — errors a user
+  cannot catch without redoing the search themselves.
 - The deeper gap is **verifiability**: neither baseline offers a single verbatim quote, so a
   user cannot check any answer against the paper without redoing the search themselves. Every
   RepCheck item carries quotes that the program fuzzy-matches against the PDF, and page

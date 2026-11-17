@@ -1,5 +1,7 @@
 # Evaluation (live mode)
 
+> Live mode calls the API only for (PDF, table) pairs without a cached answer; cached pairs are replayed unchanged. The e1/e2 rows therefore still replay the hand-written fixtures in examples/cache (deterministic pipeline); the jw2020 rows are real model answers.
+
 | Example | Fields correct | Wrong | Missed | Unreported → flagged missing | Invented | Quotes verified | Flagged for review | Result check |
 |---|---|---|---|---|---|---|---|---|
 | e1 | 13/13 | 0 | 0 | 0/0 | 0 | 15/16 | 1 | major differences: 7/11 coef. match, 7 issues |

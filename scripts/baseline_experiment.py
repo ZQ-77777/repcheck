@@ -1,11 +1,11 @@
 """Baseline: ask a raw model the replication question with the full paper, no RepCheck pipeline.
 
-    python scripts/baseline_experiment.py [--model gpt-4.1-mini] [--table Table 3]
+    python scripts/baseline_experiment.py [--model gpt-4.1-mini]
 
 Simulates "upload the paper to ChatGPT/Claude and ask" (OPERATION_GUIDE 7.2): the model gets
 the whole paper text with page markers and the plain question — none of RepCheck's page
 selection, field templates, quote requirements or verification. Answers are saved to
-examples/outputs/baseline/<model>_<table>.md for manual scoring against the gold checklist
+examples/outputs/baseline/<model>_table3.md for manual scoring against the gold checklist
 (docs/BASELINE.md). Caches under examples/cache_exp/baseline/ so demo caches stay untouched.
 """
 from __future__ import annotations
@@ -39,7 +39,7 @@ def main() -> None:
 
     pages = parse_pdf(PDF)
     paper = "\n\n".join(f"[Page {p.number}]\n{p.text}" for p in pages)
-    user = QUESTION.replace("Table 3", "Table 3") + "\n\nThe paper follows.\n\n" + paper
+    user = QUESTION + "\n\nThe paper follows.\n\n" + paper
 
     os.environ["MODEL"] = args.model          # picked up when the provider is constructed
     prov = get_provider("live", CACHE)
