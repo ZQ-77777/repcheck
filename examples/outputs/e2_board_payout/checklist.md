@@ -2,7 +2,7 @@
 
 - Paper: Board Independence and Dividend Payouts
 - Table: TABLE II: Board Independence and Dividend Payout (PDF page 3)
-- Model: mock: hand-written fixture — replace by a real live-mode run · template: regression · exported 2026-11-16 03:13
+- Model: deepseek/deepseek-v4-flash-0731 · template: regression · exported 2026-11-17 19:18
 - Review complete: NO — pending items remain
 
 | Field | Extracted value | Evidence | Check | Review | Final value |
