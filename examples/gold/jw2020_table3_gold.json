@@ -1,7 +1,7 @@
 {
   "paper": "Jayaraman & Wu (2020), Should I Stay or Should I Grow?, RFS 33(8)",
   "table": "Table 3",
-  "annotator": "Drafted from the paper text only; to be checked line by line against the paper by member D",
+  "annotator": "Checked line by line against the published RFS PDF by member D; page numbers are PDF pages of the published version.",
   "rule": "Values record what the paper states. If the paper does not state a field, the value is null. Notes cite the paper only.",
   "fields": {
     "sample_period": "2003 to 2015",
@@ -41,7 +41,7 @@
   "notes": {
     "winsorization": "No statement about winsorizing, trimming or outliers anywhere in the paper.",
     "standard_errors": "Clustered 'by industry' (p.14); the paper does not define the industry classification.",
-    "controls": "CHECK in the paper: the Table 3 note refers to 'Model 9 of Table 2'; confirm how many models Table 2 has. CHECK: LAG_CAPX is described in US$ millions (p.9); confirm whether p.11 also describes it as scaled by market value.",
+    "controls": "The Table 3 note (p.14) refers to 'Model 9 of Table 2', but Table 2 (p.11) has only eight columns — a numbering slip in the paper itself; the full-controls specification is Model 8. LAG_CAPX: the Table 1 note (p.9) reports it 'in US$ millions', while the Table 2 note (p.11) defines the regression control as 'the most recent year's annual capex scaled by start of year market value' (also 'scaled by market value' on p.12) — the descriptive-statistics variable and the control differ in scaling.",
     "subsamples": "Split rule on p.13; the paper does not state the source of the bid-ask spread data.",
     "sample_filters": "Filters on p.8; 'concurrent with an earnings forecast' is not defined further.",
     "key_independent_vars": "Standardization stated in the Table 3 note (p.14); whether CAR_POS/CAR_NEG are split before or after standardizing is not stated.",
