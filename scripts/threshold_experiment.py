@@ -63,12 +63,12 @@ INVENTED = [
 def collect_true() -> list[tuple[Path, int, str]]:
     """Verified quotes from every cached checklist whose PDF is available locally."""
     out = []
-    for checklist_path in sorted((ROOT / "examples/outputs").glob("*/checklist.json")):
+    for checklist_path in sorted((ROOT / "examples/outputs").glob("**/checklist.json")):
         data = json.loads(checklist_path.read_text(encoding="utf-8"))
-        pdf = ROOT / "examples/private" / data["source_file"] if data["source_file"].startswith("../") \
-            else ROOT / "examples/inputs" / data["source_file"]
-        pdf = pdf.resolve()
-        if not pdf.exists():
+        candidates = [ROOT / "examples/inputs" / data["source_file"],
+                      ROOT / "examples/private" / data["source_file"]]   # real papers live in private/
+        pdf = next((p.resolve() for p in candidates if p.exists()), None)
+        if pdf is None:
             continue
         for item in data["items"]:
             for e in item["evidence"]:
