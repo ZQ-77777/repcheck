@@ -4,11 +4,11 @@
 
 **Experiment date** November 16, 2026
 
-**Status** Sequential runs complete. Field accuracy pending review against the reference answers.
+**Status** Sequential runs scored against the reference answers in PR #3. The results include automatic scores and two sample-size examples.
 
 ## Setup
 
-We tested RepCheck's extraction on Tables 2 and 3 of Jayaraman and Wu (2020) using GPT-4.1 mini (`gpt-4.1-mini`), DeepSeek V4 Flash (`deepseek/deepseek-v4-flash-0731`), and DeepSeek V4 Pro (`deepseek/deepseek-v4-pro-0813`) through the HKUST GenAI (DDM 2026-27) API subscription. All runs used the same PDF, the regression checklist template, prompt version `v1`, and the default 120-second client read timeout. [Paper DOI](https://doi.org/10.1093/rfs/hhz132)
+We tested RepCheck's extraction on Tables 2 and 3 of Jayaraman and Wu (2020) using GPT-4.1 mini (`gpt-4.1-mini`), DeepSeek V4 Flash (`deepseek/deepseek-v4-flash-0731`), and DeepSeek V4 Pro (`deepseek/deepseek-v4-pro-0813`) through the HKUST GenAI (DDM 2026-27) API subscription. All baseline runs used the same PDF, the regression checklist template, prompt version `v1`, and the default 120-second client read timeout. [Paper DOI](https://doi.org/10.1093/rfs/hhz132)
 
 For the v1 benchmark, each round covered all six model–table pairs in a different order. We sent requests one at a time and used a separate cache and output directory for each attempt. All benchmark results below come from these sequential runs.
 
@@ -46,7 +46,7 @@ For the v1 benchmark, each round covered all six model–table pairs in a differ
 | GPT-4.1 mini | Table 2 | 3/3 | 11, 9, 10 | 16.511 | 0.136707 |
 | GPT-4.1 mini | Table 3 | 3/3 | 9, 10, 10 | 16.724 | 0.138346 |
 
-A verified item passed automated quote matching. Field accuracy is pending for all 17 successful runs. It requires checking that the extracted answer and its evidence apply to the target table and model column.
+A verified item passed automated quote matching. The reference-answer scores below assess answer text separately from quote matching.
 
 ## Stability
 
@@ -74,7 +74,7 @@ We read the changed answer fields in all six v1 model–table groups. The table 
 | Pro / Table 2 | Dash styles, fixed-effect wording, clustering wording and identical sample counts | PIN is absent in round 3; CAR and SIZE definitions and filtering counts vary in detail. |
 | Pro / Table 3 | Capitalization of fixed effects and standard errors; equivalent sample-filter descriptions | SF_CAR is listed as a control only in round 1. Round 2 adds column labels to sample counts. |
 
-PDF p.11 supports the Table 2 column-specific sample counts and fixed effects above. For Table 3 controls, p.14 refers to “Model 9 of Table 2”, while Table 2 has eight columns. We retain this source ambiguity for D to resolve rather than treating a varying control list as conclusively correct or incorrect. Stable answers can still be wrong, and changes in evidence alone do not establish changes in answer meaning.
+PDF p.11 supports the Table 2 column-specific sample counts and fixed effects above. For Table 3 controls, p.14 refers to “Model 9 of Table 2”, while Table 2 has eight columns. D's reference notes interpret the citation as a numbering slip and use the full-controls specification in Model 8. Stable answers can still be wrong, and changes in evidence alone do not establish changes in answer meaning.
 
 ## Prompt Version Comparison
 
@@ -84,16 +84,16 @@ Both versions completed 17 of 18 attempts. The `v2` timeout was Flash on Table 3
 
 ### Common metrics
 
-The same criteria apply to both versions. Field accuracy for the original checklist requirements will be scored using the same reviewed reference answers. The next section assesses standardization details requested by v2.
+The same criteria apply to both versions. We scored both versions against the same reference answers from [Part D PR #3](https://github.com/ZQ-77777/repcheck/pull/3), commit `0dc3c10`. The next section assesses standardization details requested by v2.
 
 | Metric | v1 | v2 |
 | --- | ---: | ---: |
 | Successful attempts | 17/18 | 17/18 |
 | Items passing automated quote matching | 189/221 | 188/221 |
 | Total estimated charge (HKD) | 2.879931 | 3.552697 |
-| Accuracy on shared checklist requirements | Pending | Pending |
+| Reported fields passing the automatic reference-answer check | 193/204 (94.6%) | 188/204 (92.2%) |
 
-The quote-matching denominator is 17 successful checklists with 13 items each. A pass means the quote met the automated fuzzy-matching threshold (90), not necessarily a verbatim match. The verifier checks the cited page first, then other PDF pages and may correct the page number. This does not establish that the answer is correct or fully supported. Missing means the model did not return a value, not proof that the paper omits it. Field scoring also checks what the quote supports.
+The quote-matching denominator is 17 successful checklists with 13 items each. A pass means the quote met the automated fuzzy-matching threshold (90), not necessarily a verbatim match. The verifier checks the cited page first, then other PDF pages and may correct the page number. This does not establish that the answer is correct or fully supported. Missing means the model did not return a value, not proof that the paper omits it. Reference-answer scoring compares answer text.
 
 | Model | Table | v1 median successful time (s) | v2 median successful time (s) |
 | --- | --- | ---: | ---: |
@@ -106,9 +106,24 @@ The quote-matching denominator is 17 successful checklists with 13 items each. A
 
 The median uses successful attempts. The v1 Pro Table 3 median and the v2 Flash Table 3 median each use two observations.
 
+### Reference-answer scoring
+
+We used the repository evaluator on the 34 saved checklists. It passes an answer when at least 60% of the distinct tokens in the shorter normalized answer also appear in the other answer. Each version has 17 successful checklists with 12 fields containing a reference answer, for 204 scored fields. In both versions all 17 winsorization fields were correctly left blank and are counted separately. Timeouts are excluded from field scores and retained in the completion results.
+
+| Model | Table | v1 passed | v2 passed |
+| --- | --- | ---: | ---: |
+| GPT-4.1 mini | Table 2 | 31/36 | 33/36 |
+| GPT-4.1 mini | Table 3 | 36/36 | 31/36 |
+| DeepSeek V4 Flash | Table 2 | 33/36 | 35/36 |
+| DeepSeek V4 Flash | Table 3 | 36/36 | 23/24 |
+| DeepSeek V4 Pro | Table 2 | 33/36 | 32/36 |
+| DeepSeek V4 Pro | Table 3 | 24/24 | 34/36 |
+
+For the 16 model–table–round combinations completed in both versions, the scores were 181/192 for v1 and 177/192 for v2. Comparison with the observation counts printed in the PDF shows errors in both directions. Flash v1 round 2 on Table 2 passed the sample-size check with only 17,577, omitting 3,456 for column 6 and 17,505 for column 8 (PDF p.11). Flash v2 round 2 on Table 3 failed that check despite correctly reporting 7,770 for columns 1 and 3 and 9,570 for columns 2 and 4 (PDF p.14). Word overlap gives an automatic agreement score. The two examples illustrate why it can differ from agreement with the table.
+
 ### Standardization details in v2
 
-These checks assess compliance with the additional v2 request, not overall superiority to v1. V1 did not explicitly request all these details. Additional correct information indicates useful guidance, but completeness, shared-field accuracy, runtime and cost must be considered separately.
+This section measures how many of the requested standardization details v2 reported correctly. A comparison with v1 would require applying the same rubric to the v1 checklists.
 
 We checked all 17 successful v2 checklists against the PDF. We counted each correctly reported standardized variable once per checklist and then checked whether a quote attached anywhere in that checklist directly supported it. Table 2 lists four standardized variables on PDF page 11 (CAR, SF_CAR, MKTRET, CAR_PRE). Table 3 lists five on PDF page 14 (CAR, CAR_POS, CAR_NEG, MKTRET, CAR_PRE). In Table 3, CAR appears at the end of the preceding line in the PDF.
 
@@ -123,6 +138,6 @@ We checked all 17 successful v2 checklists against the PDF. We counted each corr
 
 - **Standardization.** In total, the outputs recovered 49 of 76 checklist-level standardization details. Direct quotes supported 46 of those 49. The three GPT-4.1 mini Table 2 checklists correctly identified CAR standardization, but their supplied quotes joined fragments that did not reproduce the relevant passage verbatim.
 
-## Provisional recommendation
+## Recommendation
 
-GPT-4.1 mini had the lowest median successful runtime on both tables. Flash had the lowest total estimated charge on both tables and more verified items per successful run than GPT-4.1 mini. Pro returned 12 verified items on every successful run and had one timeout. Flash is a candidate for the default if the reference-answer review confirms adequate field accuracy and completeness. With three planned attempts per pair, the timings and success counts describe this experiment.
+GPT-4.1 mini had the lowest median successful runtime on both tables. Flash had the lowest total estimated charge on both tables and more verified items per successful run than GPT-4.1 mini. Pro returned 12 verified items on every successful run and had one timeout. Keep Flash with v1 as the default for this project. It completed all six baseline runs, had the lowest estimated charge on both tables, and scored 69/72 against the references. Use v2 when standardization details are a priority and review the extracted details before reuse. In this experiment, v2 had a higher estimated total charge and a slightly lower automatic reference-answer pass rate. The two versions ran in separate batches with three planned attempts per model and table. Service conditions and the limitations of automatic scoring constrain what these differences tell us about the effect of the prompt change.
