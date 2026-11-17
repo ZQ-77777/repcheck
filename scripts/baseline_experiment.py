@@ -47,7 +47,8 @@ def main() -> None:
     answer = prov.complete("You are a helpful assistant.", user, key)
 
     OUT.mkdir(parents=True, exist_ok=True)
-    out = OUT / f"{key}.md"
+    short = re.sub(r"[^a-z0-9]+", "", args.model.split("/")[-1].lower())   # gpt41mini
+    out = OUT / f"baseline_{short}_table3.md"
     out.write_text(f"# Baseline: {args.model}, Table 3\n\n## Question\n\n{QUESTION}\n\n"
                    f"## Answer (raw model, full paper in context)\n\n{answer}\n", encoding="utf-8")
     print(f"model: {prov.name}\nsaved: {out}")

@@ -42,7 +42,7 @@ though both mention the spread split in passing).
 | Content items correct | 10/11 (controls right in part) | 11/11 | 12/12 (13 fields, 12 stated) |
 | Invented (paper silent, model answers anyway) | **1** | 0 | **0** — unreported fields are marked *not in paper* |
 | Factual slips inside "correct" answers | 1 (MKTRET/CAR_PRE claimed absent from Table 3) | 0 | n/a — every claim carries a verified quote |
-| Quotes to verify any answer | 0 | 0 | 26/26 verified by program (Table 2: 26/26, Table 3: 17/17) |
+| Quotes to verify any answer | 0 | 0 | 17/17 for this table, verified by program (26/26 on Table 2) |
 | Page numbers | given for all items, correct (a few cite adjacent pages, e.g. "8-9" for p.8) | given, all correct (journal pagination) | given, verified/corrected by program |
 
 ## Reading

@@ -3,7 +3,8 @@
     python scripts/threshold_experiment.py [--thresholds 80 85 90 95]
 
 Three quote sets are compared against the PDFs with the production verify_evidence():
-  * true        — every verified quote in the cached checklists (examples/outputs/*/checklist.json);
+  * true        — every verified quote in the cached checklists (examples/outputs/**/checklist.json,
+                  including the live JW2020 answers when examples/private/jw2020.pdf is present);
                   the text really is in the PDF, so these should be accepted;
   * paraphrased — hand-written rewordings of sentences from the same PDFs (plus the one
                   reworded quote the e1 mock fixture already contains); too lenient a
