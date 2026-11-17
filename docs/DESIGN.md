@@ -28,6 +28,27 @@ Problems we had to solve, and how the code solves them. File names point to the 
 
 All modules exchange the dataclasses in `schemas.py`: `Page`, `TableTarget`, `Context`, `Evidence`, `ChecklistItem`, `Checklist`, `PaperTable`, `ResultRow`, `Discrepancy`, `ComparisonReport`. `pipeline.py` is the only module that calls the others in sequence; `app.py` and `cli.py` call `pipeline.py`.
 
+## Choosing the match threshold (90)
+
+`verifier.py` accepts a quote when its fuzzy score against the PDF text reaches `MATCH_THRESHOLD`. We measured the trade-off with three quote sets (`scripts/threshold_experiment.py`, raw table in `docs/threshold_results.md`):
+
+- **true** (27): every verified quote from the cached e1/e2 checklists — the text is in the PDF, so these should be accepted;
+- **paraphrased** (12): hand-written rewordings of real sentences (swapping synonyms, passive voice, dropping words), plus the reworded winsorization quote that already ships in the e1 mock fixture;
+- **invented** (8): plausible sentences that appear in neither PDF (e.g. "clustered at the industry level" where the paper says firm level).
+
+| Threshold | True accepted | False rejects | Paraphrased accepted | Invented accepted |
+|---|---|---|---|---|
+| 80 | 27/27 | 0 | 5/12 | 2/8 |
+| 85 | 27/27 | 0 | 4/12 | 2/8 |
+| 90 | 27/27 | 0 | 1/12 | 0/8 |
+| 95 | 27/27 | 0 | 1/12 | 0/8 |
+
+Reading:
+
+- At 80–85 the verifier accepts two invented quotes. Both are the dangerous kind: a single keyword swapped against a real sentence ("winsorized at the 1st and 99th percentiles…", "clustered at the industry level"), scoring 85.7 and 88.5. A lenient threshold would wave through exactly the hallucinations the verifier exists to catch.
+- At 90 all invented quotes are rejected and 11 of 12 paraphrases. The one that passes (95.4) changes only two words ("We require firms to have…" → "Firms must have…") — close enough that a human reviewer can confirm it quickly; the item is still shown for review anyway.
+- The true quotes all score 100, because the mock fixtures quote verbatim. Live-model quotes can score below 100 (spacing, ligatures), which is why we do not go to 95: it buys nothing on these sets but starts rejecting quotes with harmless extraction noise. The e1 winsorization paraphrase scores 80.8 — exactly the kind of model rewording the 90 threshold catches.
+
 ## Known limitations
 
 - Tables printed as images, and scanned PDFs, are rejected rather than OCR'd.
