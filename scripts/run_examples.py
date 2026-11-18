@@ -103,6 +103,11 @@ def main() -> None:
         lines += ["> Mock mode replays hand-written fixtures in examples/cache. These figures test the "
                   "deterministic pipeline (locating, verification, missing detection, comparison), "
                   "**not** the language model. Re-run with `--mode live` for model results.", ""]
+    else:
+        lines += ["> Live mode calls the API only for (PDF, table) pairs without a cached answer; cached "
+                  "pairs are replayed unchanged. The e1/e2 rows therefore still replay the hand-written "
+                  "fixtures in examples/cache (deterministic pipeline); the jw2020 rows are real model "
+                  "answers.", ""]
     lines += ["| Example | Fields correct | Wrong | Missed | Unreported → flagged missing | Invented | "
               "Quotes verified | Flagged for review | Result check |", "|---|---|---|---|---|---|---|---|---|"]
     details = []

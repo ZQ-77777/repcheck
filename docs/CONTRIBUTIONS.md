@@ -23,7 +23,22 @@ peer ratings are based on this file.
 - Wrote the model comparison report. Field accuracy is pending review against the reference answers.
 
 ## Member D — evaluation and baseline
-- Pull requests:
+- Wrote the JW2020 gold answers against the published RFS PDF, independently of the drafter:
+  `jw2020_table2_gold.json` from scratch (all 13 fields, including the Model 1-8 column
+  structure and the 3,456-forecast SF_CAR subsample) and line-by-line verification of
+  `jw2020_table3_gold.json` — resolved both CHECK items ("Model 9 of Table 2" is a numbering
+  slip in the paper; LAG_CAPX is scaled in the regressions but in US$ millions in Table 1).
+- Ran the live evaluation (`run_examples.py --mode live`, deepseek-v4-flash): JW2020 Table 3
+  12/12 fields, 17/17 quotes verified; Table 2 10/12 with both misses explainable and
+  documented (`examples/outputs/evaluation.md`).
+- Match-threshold experiment justifying `MATCH_THRESHOLD = 90`
+  (`scripts/threshold_experiment.py`, new section in `docs/DESIGN.md`, 3 new tests): 70 true
+  quotes (27 fixtures + 43 live) all accepted at 90, while 80-85 accept invented quotes that
+  swap a single keyword.
+- Baseline comparison for slide 9 (`scripts/baseline_experiment.py`, `docs/BASELINE.md`):
+  raw gpt-4.1-mini and raw deepseek given the full paper — content is mostly right but one
+  invents the winsorization answer and neither offers a single verifiable quote.
+- Pull requests: #3
 
 ## Member E — interface
 - Pull requests:

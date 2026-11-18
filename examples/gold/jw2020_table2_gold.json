@@ -1,0 +1,52 @@
+{
+  "paper": "Jayaraman, Wu & Jiang (2020), Should I Stay or Should I Grow? Using Voluntary Disclosure to Elicit Market Feedback, RFS 33(8), 3854-3888",
+  "table": "Table 2",
+  "annotator": "Member D, written independently from the published paper text only; page numbers are PDF pages of the published RFS version.",
+  "rule": "Values record what the paper states. If the paper does not state a field, the value is null. Notes cite the paper only.",
+  "fields": {
+    "sample_period": "2003 to 2015",
+    "data_sources": [
+      "IBES Guidance (capex forecasts)",
+      "Compustat (accounting data)",
+      "CRSP (stock price data)"
+    ],
+    "sample_filters": [
+      "firms making annual capex forecasts covered by IBES, matched to Compustat using the IBES link file (initial sample of 40,785 forecasts, 2002-2016)",
+      "matched with CRSP to obtain the short-window market reaction on the issuance date (reduces the sample to 36,900 forecasts)",
+      "delete forecasts made concurrently with an earnings forecast (17,473 forecasts deleted)",
+      "delete forecasts made in 2016 because actual capital expenditure data as of the end of the year are needed (1,850 forecasts deleted)"
+    ],
+    "unit_of_observation": "firm-quarter",
+    "dependent_var": "CAPEX_ADJ: percentage deviation of actual capex from forecasted capex scaled by the latter; for range forecasts, the difference between annual capex and the endpoints of the range (upper end for upward, lower end for downward adjustments), scaled by the forecast",
+    "key_independent_vars": [
+      "CAR: cumulative abnormal return (firm return minus S&P 500 index return) over the 5 days [-2, 2] surrounding the forecast date, standardized to have a zero mean and unit standard deviation"
+    ],
+    "controls": [
+      "SIZE: log of market value of equity",
+      "LAG_CAPX: most recent year's annual capex scaled by start of year market value (Table 2 note)",
+      "SURP: earnings surprise for the most recent quarter, the quarter's EPS minus that of the same quarter of the previous year",
+      "EA_DUM: indicator for capex forecasts made concurrently with earnings announcements"
+    ],
+    "fixed_effects": "none in Models 1 and 2; year-quarter fixed effects in Model 3; firm and year-quarter fixed effects in Models 4 to 8",
+    "standard_errors": "robust standard errors clustered by firm in Models 1 to 4 and by industry in Models 5 to 8",
+    "model": "linear regression (OLS) with fixed effects",
+    "subsamples": "columns add specification elements progressively: Model 1 univariate; Model 2 adds SIZE; Model 3 adds year-quarter fixed effects; Model 4 adds firm fixed effects; Model 5 switches clustering to industry; Model 6 falsification test adding SF_CAR (market reaction to sales forecasts) on the 3,456-forecast subsample with a matching sales forecast; Model 7 falsification tests adding MKTRET (S&P 500 return on the forecast date) and CAR_PRE (pseudo 5-day market reaction around a non-forecast day 2 weeks prior); Model 8 adds LAG_CAPX, SURP and EA_DUM",
+    "winsorization": null,
+    "sample_size": "17,577 in Models 1 to 5 and 7; 3,456 in Model 6; 17,505 in Model 8"
+  },
+  "notes": {
+    "sample_period": "Initial sample covers 2002-2016 (p.8); 2016 forecasts are deleted, so the final period is 2003-2015 (p.8).",
+    "data_sources": "Section 1.2 (p.8) also lists Easley et al.'s PIN data from Brown et al. (2004), but Table 2 uses no PIN-based variable; the spread split appears in Table 3.",
+    "sample_filters": "Filters on p.8; final sample 17,577 forecasts by 1,790 unique firms. 'Concurrent with an earnings forecast' is not defined further; forecasts concurrent with quarterly earnings announcements are retained (footnote 15, p.8).",
+    "unit_of_observation": "'Our unit of observation in most tables is a firm-quarter' (p.8).",
+    "dependent_var": "Definition in Section 1.2 (p.8) and the Table 1 note (p.9); range-forecast handling on p.10 (Section 2.1 area).",
+    "key_independent_vars": "CAR is standardized to have a zero mean and unit standard deviation (p.10 text; Table 2 note, p.11). SF_CAR, MKTRET and CAR_PRE enter only as falsification variables in Models 6-7 and are described under subsamples.",
+    "controls": "Table 2 note (p.11) defines LAG_CAPX as 'the most recent year's annual capex scaled by start of year market value' (also 'scaled by market value' on p.12), while the Table 1 note (p.9) reports LAG_CAPX 'in US$ millions' — the descriptive-statistics variable and the regression control differ in scaling.",
+    "fixed_effects": "Table 2 note (p.11): Model 3 includes year-quarter fixed effects, Models 4 to 8 firm and year-quarter fixed effects.",
+    "standard_errors": "Industry clustering is the main specification (p.10); the firm-to-industry switch between Models 4 and 5 is stated in the Table 2 note (p.11). The industry classification is not defined anywhere in the paper.",
+    "model": "The paper says 'we estimate the following regression' (p.10); OLS is not named explicitly.",
+    "subsamples": "Model descriptions on pp.11-12; the Model 6 subsample of 3,456 forecasts with a corresponding sales forecast is footnote 22 (p.12); the median sales forecast is 86 days away from the capex forecast.",
+    "winsorization": "No statement about winsorizing, trimming or outliers anywhere in the paper.",
+    "sample_size": "Obs. row of Table 2 (p.11); the drop from 17,577 to 17,505 in Model 8 is not explained in the text."
+  }
+}

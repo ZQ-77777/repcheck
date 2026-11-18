@@ -1,6 +1,6 @@
 {
   "source_file": "jw2020.pdf",
-  "content_hash": "dcca6cebd11920be32670695a2854f4fabba14e7aa4250b59f6282f063de923d",
+  "content_hash": "ac05a30d394b89c63069afb1aaa94830b266f480c4643b7c674e0572d7961ddb",
   "table": {
     "label": "Table 2",
     "number": 2,
@@ -61,16 +61,23 @@
       "required": true,
       "extraction_status": "verified",
       "value": [
-        "Firms making annual capex forecasts as covered by IBES, matched to Compustat using IBES linkfile (initial sample 40,785 forecasts, 2002-2016)",
-        "Matched with CRSP to obtain short-window market reaction on issuance date (36,900 forecasts)",
+        "Firms making annual capex forecasts as covered by IBES",
+        "Matched to Compustat using the IBES link file",
+        "Initial sample of 40,785 forecasts between 2002 and 2016",
+        "Matched with CRSP to obtain short-window market reaction",
         "Deleted 17,473 forecasts made concurrently with an earnings forecast",
-        "Deleted 1,850 forecasts made in 2016 because actual capital expenditure data as of end of year are needed",
-        "Final sample 17,577 capex forecasts by 1,790 unique firms, 2003-2015"
+        "Deleted 1,850 forecasts made in 2016 because actual capital expenditure data needed as of end of year"
       ],
       "evidence": [
         {
           "page": 8,
-          "quote": "we begin with firms making annual capex forecasts (as covered by IBES) and match these firms to Compustat using the IBES linkfile. This gives us an initial sample of 40,785 forecasts between the years 2002 and 2016",
+          "quote": "we begin with firms making annual capex forecasts (as covered by IBES) and match these firms to Compustat using the IBES link file.",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 8,
+          "quote": "This gives us an initial sample of 40,785 forecasts between the years 2002 and 2016 (where year denotes the year of the forecast).",
           "verified": true,
           "page_corrected": false
         },
@@ -83,12 +90,6 @@
         {
           "page": 8,
           "quote": "We delete 17,473 forecasts that are made concurrently with an earnings forecast and another 1,850 that are made in 2016 because we need actual capital expenditure data as of the end of the year.",
-          "verified": true,
-          "page_corrected": false
-        },
-        {
-          "page": 8,
-          "quote": "The final sample comprises 17,577 capex forecasts made by 1,790 unique firms over the period 2003 to 2015.",
           "verified": true,
           "page_corrected": false
         }
@@ -142,15 +143,15 @@
       "required": true,
       "extraction_status": "verified",
       "value": [
-        "CAR: cumulative abnormal return (firm return minus S&P500 index return) over the 5 days surrounding the capex forecast date; standardized to zero mean and unit standard deviation",
-        "SF_CAR: market reaction to sales forecasts made for the same fiscal period and closest to the capex forecast; standardized to zero mean and unit standard deviation",
-        "MKTRET: market returns on the forecast date; standardized to zero mean and unit standard deviation",
-        "CAR_PRE: pseudo-market reactions around a nonforecast date; standardized to zero mean and unit standard deviation"
+        "CAR: cumulative abnormal returns around the forecast date, standardized to zero mean and unit standard deviation",
+        "SF_CAR: market reaction to sales forecasts made for the same fiscal period and closest to the capex forecast, standardized to zero mean and unit standard deviation",
+        "MKTRET: market returns on the forecast date, standardized to zero mean and unit standard deviation",
+        "CAR_PRE: pseudo-market reactions around a nonforecast date, standardized to zero mean and unit standard deviation"
       ],
       "evidence": [
         {
-          "page": 8,
-          "quote": "CAR, defined as the cumulative abnormal return (i.e., firm return minus S&P500 index return) over the 5 days surrounding the capex forecast date (i.e., days [-2, 2] relative to the forecast date).",
+          "page": 11,
+          "quote": "CAR denotes cumulative abnormal returns around the forecast date.",
           "verified": true,
           "page_corrected": false
         },
@@ -162,7 +163,13 @@
         },
         {
           "page": 11,
-          "quote": "MKTRET denotes market returns on the forecast date. CAR_PRE denotes pseudo-market reactions around a nonforecast date.",
+          "quote": "MKTRET denotes market returns on the forecast date.",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 11,
+          "quote": "CAR_PRE denotes pseudo-market reactions around a nonforecast date.",
           "verified": true,
           "page_corrected": false
         },
@@ -184,15 +191,15 @@
       "required": true,
       "extraction_status": "verified",
       "value": [
-        "SIZE: log of market value of equity",
+        "SIZE: firm size defined as the log of market value of equity (closing stock price times shares outstanding), calculated as of the end of the quarter preceding the capex forecast quarter",
         "LAG_CAPX: most recent year's annual capex scaled by start of year market value",
         "SURP: earnings surprise for the most recent quarter defined as the quarter's earnings-per-share minus that of the same quarter of the previous year",
-        "EA_DUM: indicator for capex announcements accompanied by earnings announcements"
+        "EA_DUM: indicator to denote capex announcements accompanied by earnings announcements"
       ],
       "evidence": [
         {
-          "page": 8,
-          "quote": "size, defined as the log of market value of equity (SIZE)",
+          "page": 9,
+          "quote": "SIZE denotes firm size defined as the log of market value of equity (closing stock price times shares outstanding) and is calculated as of the end of the quarter preceding the capex forecast quarter.",
           "verified": true,
           "page_corrected": false
         },
@@ -225,11 +232,11 @@
       "label": "Fixed effects",
       "required": true,
       "extraction_status": "verified",
-      "value": "None in Models 1-2; year-quarter in Model 3; firm and year-quarter in Models 4-8",
+      "value": "None (Models 1-2); year-quarter (Model 3); firm and year-quarter (Models 4-8)",
       "evidence": [
         {
           "page": 11,
-          "quote": "Model3 includes year-quarter fixed effects, whereas Models4to8includefirmandyear-quarterfixedeffects.",
+          "quote": "Model 3 includes year-quarter fixed effects, whereas Models 4 to 8 include firm and year-quarter fixed effects.",
           "verified": true,
           "page_corrected": false
         }
@@ -244,7 +251,7 @@
       "label": "Standard errors",
       "required": true,
       "extraction_status": "verified",
-      "value": "Clustered by firm in Models 1-4; clustered by industry in Models 5-8",
+      "value": "Robust standard errors clustered by firm (Models 1-4) and by industry (Models 5-8)",
       "evidence": [
         {
           "page": 11,
@@ -262,17 +269,59 @@
       "key": "model",
       "label": "Estimation method",
       "required": true,
+      "extraction_status": "missing",
+      "value": null,
+      "evidence": [],
+      "hint": "Not found by the model. Keywords for this field appear on p.8, p.10, p.12, p.14, p.15, p.16; check them. If the paper does not report it, mark 'Not in paper'.",
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "subsamples",
+      "label": "Subsamples / column structure",
+      "required": false,
       "extraction_status": "verified",
-      "value": "OLS",
+      "value": "Models differ by specification: Model 1 univariate; Model 2 adds SIZE; Model 3 adds year-quarter fixed effects; Model 4 adds firm and year-quarter fixed effects; Model 5 clusters by industry; Model 6 adds SF_CAR and uses the 3,456-forecast subsample with corresponding sales forecasts; Model 7 adds MKTRET and CAR_PRE; Model 8 adds LAG_CAPX, SURP, EA_DUM.",
       "evidence": [
         {
-          "page": 10,
-          "quote": "we regress the percentage deviation between the annual capex and the forecasted amount (i.e., CAPEX_ADJ) on the market reaction to the capex forecast (i.e., CAR).",
+          "page": 11,
+          "quote": "Model 1 presents univariate evidence where CAPEX_ADJ is regressed on CAR without controlling for SIZE or the fixed effects.",
+          "verified": true,
+          "page_corrected": true
+        },
+        {
+          "page": 11,
+          "quote": "The above result is robust to controlling for firm size (Model 2), including time fixed effects (Model 3), firm and time fixed effects (Model 4), and to clustering by industry rather than by firm (Model 5).",
+          "verified": true,
+          "page_corrected": true
+        },
+        {
+          "page": 12,
+          "quote": "Model 6 presents results of a falsification test where we include the market reaction to managerial sales forecasts (SF_CAR).",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 12,
+          "quote": "These inferences are based on a smaller sample of 3,456 capex forecasts for which we can find a corresponding sales forecast made by the firm for the same fiscal period.",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 12,
+          "quote": "Model 7 presents results of two other falsification tests, where we include the aggregate market returns measured using the S&P 500 index (MKTRET) on the capex forecast date, as well as a pseudo-market reaction variable (CAR_PRE)",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 12,
+          "quote": "Finally, Model 8 includes additional controls in the specification.",
           "verified": true,
           "page_corrected": false
         }
       ],
-      "hint": null,
+      "hint": "Page number corrected to p.11, p.11.",
       "review_status": "pending",
       "user_value": null,
       "user_note": null
@@ -294,7 +343,7 @@
       "label": "Reported sample size",
       "required": false,
       "extraction_status": "verified",
-      "value": "17,577 for most models; 3,456 in Model 6; 17,505 in Model 8",
+      "value": "17,577 (Models 1-5,7); 3,456 (Model 6); 17,505 (Model 8)",
       "evidence": [
         {
           "page": 11,
