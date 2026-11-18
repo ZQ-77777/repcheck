@@ -17,8 +17,10 @@ peer ratings are based on this file.
 ## Member B — PDF parsing and table locating
 - Pull requests:
 
-## Member C — prompts and model comparison
-- Pull requests:
+## Xinyi Dou (Member C) — prompts and model comparison
+- Ran the sequential comparison of three models on JW2020 Tables 2 and 3 and analyzed the stability of the extracted answers and evidence.
+- Added an optional v2 extraction prompt and compared runtime, estimated cost, quote matching and coverage of standardization details.
+- Wrote the model comparison report. Field accuracy is pending review against the reference answers.
 
 ## Member D — evaluation and baseline
 - Pull requests:
