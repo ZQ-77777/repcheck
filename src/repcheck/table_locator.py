@@ -18,6 +18,7 @@ _ROMAN = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100}
 # Tolerant spelling: PDF text often loses or adds spaces ("Table3", "T able 3", "T A B L E 3").
 CAPTION_RE = re.compile(r"^\s*t\s?a\s?b\s?l\s?e\s*([0-9]+|[ivxlc]+)\b\s*[.:\-]?\s*(.*)$", re.IGNORECASE)
 NOTES_RE = re.compile(r"^\s*(notes?\b|this table\b)", re.IGNORECASE)
+MENTION_RE = re.compile(r"\btable\s*(?:no\.?\s*)?([0-9]+|[ivxlc]+)\b", re.IGNORECASE)
 
 # Scoring weights (kept as constants so a teammate can tune them without reading the logic)
 W_TITLE_LIKE = 1        # caption text after the label looks like a title
@@ -28,10 +29,18 @@ NUMERIC_DENSITY = 0.12  # share of digit characters that counts as "dense"
 
 
 class TableNotFoundError(Exception):
-    def __init__(self, label: str, available: list[str]):
+    def __init__(self, label: str, available: list[str], mentions: list[int] | None = None):
         self.label, self.available = label, available
+        self.mentions = mentions or []
         found = ", ".join(available) if available else "none"
-        super().__init__(f"Could not find '{label}' in the PDF. Tables found: {found}.")
+        message = f"Could not find '{label}' in the PDF. Tables found: {found}."
+        if self.mentions:
+            pages = ", ".join(str(n) for n in self.mentions)
+            message += (f" The running text mentions '{label}' on page(s) {pages}, but no caption line"
+                        " starts there: the caption may be set as an image, or the table may be printed"
+                        " sideways. Try `python scripts/diagnose_table.py PAPER.pdf --table"
+                        f" {label.split()[-1]}` to see what the page contains.")
+        super().__init__(message)
 
 
 @dataclass
@@ -102,6 +111,22 @@ def list_tables(pages: list[Page]) -> list[str]:
     return [f"Table {n}" for n in nums]
 
 
+def pages_mentioning(pages: list[Page], number: int) -> list[int]:
+    """Pages whose running text refers to "Table N" (diagnostics for a missing caption)."""
+    out: list[int] = []
+    for p in pages:
+        for m in MENTION_RE.finditer(p.text):
+            tok = m.group(1)
+            try:
+                n = int(tok) if tok.isdigit() else roman_to_int(tok)
+            except KeyError:
+                continue
+            if n == number:
+                out.append(p.number)
+                break
+    return out
+
+
 def _extract_notes(text: str) -> str:
     lines = text.splitlines()
     for i, ln in enumerate(lines):
@@ -116,7 +141,7 @@ def locate_table(pages: list[Page], label: str) -> TableTarget:
     cands = [c for c in find_candidates(pages) if c.number == number and c.score > 0]
     main = [c for c in cands if not c.continued]
     if not main:
-        raise TableNotFoundError(canonical, list_tables(pages))
+        raise TableNotFoundError(canonical, list_tables(pages), pages_mentioning(pages, number))
     best = max(main, key=lambda c: (c.score, -c.page))
 
     by_num = {p.number: p for p in pages}

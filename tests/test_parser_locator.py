@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from helpers import E1, E2, SCANNED
+from helpers import E1, E2, ROOT, SCANNED
 from repcheck.pdf_parser import InvalidPDFError, ScannedPDFError, parse_pdf
 from repcheck.schemas import Page
 from repcheck.table_locator import TableNotFoundError, list_tables, locate_table, parse_label
@@ -84,3 +84,49 @@ class TightSpacingTest(unittest.TestCase):
         self.assertEqual(locate_table(pages, "3").pages, [1])
         ev = verify_evidence(Evidence(1, "Robust standard errors clustered by industry."), {1: text})
         self.assertTrue(ev.verified)
+
+
+class RotatedTablePageTest(unittest.TestCase):
+    """Wide tables printed sideways: the reader turns the page, pdfplumber returns one word per line.
+
+    Real RFS articles print some regression tables this way. Before the re-flow in `pdf_parser.py`,
+    the caption "TABLE 4" came out as "4\\nELBAT" (or one word per line), so the table was invisible.
+    Fixture: `scripts/make_fixtures.py` (p.1 content rotated 90° plus an upright banner and a 270°
+    sidebar, p.2 /Rotate 90, p.3 upright). The mixed angles on p.1 are what a real RFS page has.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.pages = parse_pdf(ROOT / "tests" / "fixtures" / "rotated_tables.pdf")
+
+    def test_caption_in_rotated_block_is_found(self):
+        target = locate_table(self.pages, "4")
+        self.assertEqual(target.pages, [1])
+        self.assertTrue(target.caption.startswith("TABLE 4"))
+        self.assertIn("OLS", target.notes)
+
+    def test_page_rotation_attribute_is_found(self):
+        # Same failure, produced with /Rotate 90 instead of a rotated text block.
+        self.assertEqual(locate_table(self.pages, "5").pages, [2])
+
+    def test_upright_control_page_is_unchanged(self):
+        self.assertEqual(locate_table(self.pages, "6").pages, [3])
+        self.assertIn("The dependent variable is CAR", self.pages[2].text)
+        self.assertEqual(list_tables(self.pages), ["Table 4", "Table 5", "Table 6"])
+
+    def test_rotated_text_is_reflowed_in_reading_order(self):
+        text = self.pages[0].text
+        self.assertIn("4. Results", text)
+        self.assertIn("Notes: This table reports OLS estimates.", text)
+        self.assertNotIn("ELBAT", text)
+        # The upright banner is re-flowed on its own axes, not projected onto the table's.
+        self.assertIn("Page: 3870", text)
+        self.assertTrue(text.rstrip().endswith("Page: 3870 3854-3888"))
+
+    def test_missing_caption_points_to_the_prose_mention(self):
+        pages = [Page(1, "1. Introduction\nWe study peers."),
+                 Page(2, "Table 4 reports the robustness checks.\nA 0.1 0.2 0.3 4 5 6")]
+        with self.assertRaises(TableNotFoundError) as ctx:
+            locate_table(pages, "4")
+        self.assertEqual(ctx.exception.mentions, [2])
+        self.assertIn("image", str(ctx.exception))

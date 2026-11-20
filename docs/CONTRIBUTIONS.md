@@ -15,7 +15,18 @@ peer ratings are based on this file.
 - Pull requests:
 
 ## Member B — PDF parsing and table locating
-- Pull requests:
+- Root-caused the missing JW2020 Table 4: the page is printed sideways (95% of its characters are
+  rotated 90°), so pdfplumber returned the caption reversed as `4elbaT` and no caption line matched.
+  Sideways pages are now re-flowed from character boxes, one block per rotation angle, in
+  `pdf_parser.py` (a naive single-angle re-flow was not enough: the upright publisher banner merged
+  into the caption line). JW2020 now lists Tables 1–6; Table 4 resolves to PDF p. 17 (printed p. 3870).
+- Tested the locator on three further journal papers (*AER*, *TAR*, *JFE*; 22/22 numbered tables
+  located) and recorded versions, page mapping and remaining gaps in `docs/PARSER_NOTES.md`.
+- `TableNotFoundError` now reports the pages that mention a table in prose, so an image caption can be
+  told apart from a typo; added `scripts/diagnose_table.py` to explain any missing table in one command.
+- Added `scripts/make_fixtures.py` with `tests/fixtures/rotated_tables.pdf` (rotated block + banner +
+  270° sidebar, a `/Rotate 90` page and an upright control) and 5 new tests (64 in the suite after PR #5 merged, all passing).
+- Pull requests: #6
 
 ## Xinyi Dou (Member C) — prompts and model comparison
 - Ran the sequential comparison of three models on JW2020 Tables 2 and 3 and analyzed the stability of the extracted answers and evidence.
