@@ -151,7 +151,7 @@ Notes on the columns:
 ## 4. How to reproduce
 
 ```bash
-python -m pytest -q                                  # 60 tests, no API key, no private PDF
+python -m pytest -q                                  # 64 tests, no API key, no private PDF
 python cli.py tables examples/private/jw2020.pdf     # expects Tables 1-6
 python scripts/diagnose_table.py examples/private/jw2020.pdf --table 4
 python scripts/diagnose_table.py PAPER.pdf --table 3 # any paper

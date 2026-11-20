@@ -25,7 +25,7 @@ peer ratings are based on this file.
 - `TableNotFoundError` now reports the pages that mention a table in prose, so an image caption can be
   told apart from a typo; added `scripts/diagnose_table.py` to explain any missing table in one command.
 - Added `scripts/make_fixtures.py` with `tests/fixtures/rotated_tables.pdf` (rotated block + banner +
-  270° sidebar, a `/Rotate 90` page and an upright control) and 5 new tests (60 total, all passing).
+  270° sidebar, a `/Rotate 90` page and an upright control) and 5 new tests (64 in the suite after PR #5 merged, all passing).
 - Pull requests: #6
 
 ## Xinyi Dou (Member C) — prompts and model comparison
