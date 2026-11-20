@@ -66,3 +66,44 @@ def write_results_csv(models: dict, path: str | Path, rename: dict | None = None
         writer.writeheader()
         writer.writerows(rows)
     return path
+
+def convert_esttab_csv(source: str | Path, output: str | Path) -> Path:
+    """Convert a numbered esttab CSV with standard errors in parentheses."""
+    with Path(source).open(encoding="utf-8-sig", newline="") as file:
+        # esttab may wrap spreadsheet cells as ="value".
+        reader = csv.reader(line.removeprefix("=").replace(',="', ',"') for line in file)
+        rows = ([cell.strip() for cell in row] for row in reader)
+        models = next((row[1:] for row in rows if row[1:2] == ["(1)"]), None)
+        body = [row for row in rows if any(row)]
+    if not models:
+        raise ValueError("Expected numbered model columns such as (1), (2).")
+
+    sizes = [""] * len(models)
+    for row in body:
+        label = row[0].lower().replace("-", " ")
+        if label in {"n", "observations"}:
+            sizes = row[1:]
+        if label.startswith(("t statistics", "z statistics", "p values")):
+            raise ValueError("Export standard errors with the esttab se option.")
+
+    results = []
+    for coefs, errors in zip(body, body[1:]):
+        variable = coefs[0]
+        if not variable or errors[0] or not any(s.startswith("(") for s in errors[1:]):
+            continue
+        for model, coef, se, n in zip(models, coefs[1:], errors[1:], sizes, strict=True):
+            if coef in ("", "."):
+                continue
+            value = float(coef.rstrip("*").replace(",", ""))
+            se = se.strip("()").replace(",", "")
+            error = "" if se in ("", ".") else float(se)
+            results.append((model, variable, value, error, "", n.replace(",", "")))
+
+    if not results:
+        raise ValueError("No coefficient and standard-error pairs found.")
+    output = Path(output)
+    with output.open("w", encoding="utf-8", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["column", "variable", "coef", "se", "pvalue", "n"])
+        writer.writerows(results)
+    return output

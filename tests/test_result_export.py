@@ -47,5 +47,23 @@ class ResultExportTest(unittest.TestCase):
             rows_from_model(object(), "(1)")
 
 
+    def test_esttab_csv_keeps_models_separate(self):
+        from repcheck.result_export import convert_esttab_csv
+
+        source = ROOT / "examples" / "inputs" / "f_esttab_sample.csv"
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder) / "results.csv"
+            convert_esttab_csv(source, output)
+            rows = load_results_csv(output)
+
+        actual = [
+            (row.column, row.variable, row.coef, row.se, row.pvalue, row.n)
+            for row in rows
+        ]
+        self.assertCountEqual(actual, [
+            ("(1)", "COVERAGE", 0.0209, 0.0043, None, 120),
+            ("(2)", "COVERAGE", -0.0163, 0.0054, None, 95),
+        ])
+
 if __name__ == "__main__":
     unittest.main()
