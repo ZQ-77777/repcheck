@@ -2,6 +2,7 @@ import unittest
 
 from helpers import ROOT  # noqa: F401
 from repcheck.comparator import ResultsFormatError, compare, load_results_csv, stars_from
+from repcheck.exporter import report_to_markdown
 from repcheck.schemas import PaperTable, ResultRow, TableCell, TableColumn
 
 
@@ -54,6 +55,59 @@ class ComparatorTest(unittest.TestCase):
         with self.assertRaises(ResultsFormatError):
             load_results_csv("column,variable,coef\n1,A,abc\n")
 
+    def test_se_mismatch_with_matching_coefficient(self):
+        entry = TableCell("COVERAGE", "0.50***", "(0.10)", 0.50, 0.10, 3, True)
+        column = TableColumn("(1)", "Y", "se", "1000", 1000, True, [entry])
+        paper = PaperTable("Table 1", "test", [column])
+        row = ResultRow("(1)", "COVERAGE", 0.50, se=0.14, n=1000)
+
+        report = compare(paper, [row])
+        self.assertIn(("COVERAGE", "se_mismatch"), kinds(report))
+
+    def test_cross_column_scale_summarizes_the_variable_once(self):
+        paper = PaperTable("Table 1", "test", [
+            TableColumn("(1)", "Y", "none", None, None, False, [cell("CASH", 0.02)]),
+            TableColumn("(2)", "Y", "none", None, None, False, [cell("SIZE", 1.0)]),
+            TableColumn("(3)", "Y", "none", None, None, False, [cell("cash", -0.05)]),
+        ])
+        for factor in (100, 0.01, 2):
+            with self.subTest(factor=factor):
+                rows = [ResultRow("(3)", "Cash", -0.05 * factor),
+                        ResultRow("(2)", "SIZE", 1.0),
+                        ResultRow("(1)", "cash", 0.02 * factor)]
+                report = compare(paper, rows)
+                summaries = [d for d in report.discrepancies if d.kind == "cross_column_scale"]
+                self.assertEqual(len(summaries), 1)
+                summary = summaries[0]
+                self.assertEqual((summary.variable, summary.column), ("CASH", "(1), (3)"))
+                self.assertIn(f"{factor:g} times", summary.message)
+                self.assertIn("units", summary.message.lower())
+                self.assertIn("controls", summary.suspects)
+                self.assertEqual((report.matched_cells, report.total_cells), (1, 3))
+                self.assertEqual(len(report.discrepancies), 3)  # two individual findings plus the summary
+                self.assertIn("**Consistent scaling across models**", report_to_markdown(report))
+
+    def test_cross_column_scale_requires_consistent_evidence_in_every_model(self):
+        paper = PaperTable("Table 1", "test", [
+            TableColumn(label, "Y", "none", None, None, False, [cell("CASH", 1.0)])
+            for label in ("(1)", "(2)", "(3)")
+        ])
+        for factors, expected in [
+            ((100, 103, 105), True),       # largest factor is within 5% of the smallest
+            ((100, 103, 106), False),
+            ((100, 100, 1), False),        # one column already matches
+            ((100, 100, -100), False),     # sign reversal
+            ((100, 100, 0), False),
+            ((100, 100), False),           # missing model
+            ((1.05, 1.05, 1.05), False),   # within the ordinary matching tolerance
+        ]:
+            with self.subTest(factors=factors):
+                rows = [ResultRow(col.label, "CASH", value) for col, value in zip(paper.columns, factors)]
+                self.assertEqual(("CASH", "cross_column_scale") in kinds(compare(paper, rows)), expected)
+
+        rows = [ResultRow(col.label, "CASH", 100) for col in paper.columns]
+        paper.columns[-1].cells[0].verified = False
+        self.assertNotIn(("CASH", "cross_column_scale"), kinds(compare(paper, rows)))
 
 if __name__ == "__main__":
     unittest.main()
