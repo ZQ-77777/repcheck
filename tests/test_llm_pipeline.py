@@ -60,7 +60,9 @@ class PipelineMockTest(unittest.TestCase):
         table, report = run_compare(paper, "Table 3", INPUTS / "e1_replication_results.csv", prov, c)
         self.assertEqual(table.unverified_numbers(), ["(2) LEV=-0.0452***"])      # misread SE caught
         kinds = {d.kind for d in report.discrepancies}
-        self.assertEqual(kinds, {"n_mismatch", "significance", "magnitude", "scale", "variable_missing"})
+        self.assertEqual(kinds, {"n_mismatch", "significance", "magnitude", "scale", "variable_missing", "se_mismatch"})
+        self.assertEqual([(d.column, d.variable) for d in report.discrepancies if d.kind == "se_mismatch"],
+                         [("(2)", "MTB")])
 
     def test_e2_matches_and_reports_unreported_fields(self):
         prov = MockProvider(CACHE)

@@ -171,7 +171,7 @@ class ResultRow:
 class Discrepancy:
     column: str
     variable: Optional[str]
-    kind: str          # n_mismatch | column_missing | variable_missing | sign_flip | scale | magnitude | significance
+    kind: str          # n_mismatch | column_missing | variable_missing | sign_flip | scale | cross_column_scale | magnitude | significance | se_mismatch
     severity: str      # major | minor
     paper: Optional[str]
     replicated: Optional[str]

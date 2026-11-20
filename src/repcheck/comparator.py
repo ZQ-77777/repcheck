@@ -15,6 +15,9 @@ from __future__ import annotations
 
 import csv
 import io
+from collections import Counter
+from decimal import Decimal
+from math import isfinite
 from pathlib import Path
 
 from .schemas import (Checklist, ComparisonReport, Discrepancy, PaperTable, ResultRow,
@@ -32,8 +35,10 @@ SUSPECTS = {
     "variable_missing": ["controls", "key_independent_vars"],
     "sign_flip": ["dependent_var", "key_independent_vars", "controls"],
     "scale": ["dependent_var", "key_independent_vars", "controls"],
+    "cross_column_scale": ["dependent_var", "key_independent_vars", "controls"],
     "magnitude": ["winsorization", "subsamples", "controls", "sample_filters", "fixed_effects"],
     "significance": ["standard_errors", "fixed_effects"],
+    "se_mismatch": ["standard_errors"],
 }
 
 
@@ -130,6 +135,7 @@ def _is_scaled(paper: float, rep: float) -> bool:
 def compare(paper: PaperTable, results: list[ResultRow], checklist: Checklist | None = None,
             rel_tol: float = REL_TOL, n_tol: float = N_TOL) -> ComparisonReport:
     out: list[Discrepancy] = []
+    scale_samples = {}
     total = matched = 0
 
     def add(col, var, kind, severity, p, r, msg):
@@ -159,6 +165,8 @@ def compare(paper: PaperTable, results: list[ResultRow], checklist: Checklist | 
                     f"{cell.variable} is in the paper but not in the replication.")
                 continue
             p, q = cell.coef, r.coef
+            if cell.verified and p != 0 and isfinite(p) and isfinite(q):
+                scale_samples.setdefault(cell.variable.lower(), {})[col.label] = (cell, q)
             ok = True
             if p != 0 and q != 0 and (p > 0) != (q > 0):
                 add(col.label, cell.variable, "sign_flip", "major", cell.coef_raw, f"{q:.4g}",
@@ -174,6 +182,19 @@ def compare(paper: PaperTable, results: list[ResultRow], checklist: Checklist | 
                 add(col.label, cell.variable, "magnitude", "major" if rel > MAJOR_REL else "minor",
                     cell.coef_raw, f"{q:.4g}", f"Magnitude differs by {100 * rel:.0f}%.")
                 ok = False
+            elif (
+                col.paren_kind == "se" and cell.verified
+                and (p != 0 or q == 0)
+                and cell.paren is not None and cell.paren > 0
+                and r.se is not None and r.se >= 0
+            ):
+                paper_se = Decimal(str(cell.paren))
+                se_gap = abs(Decimal(str(r.se)) - paper_se) / paper_se
+                if se_gap > Decimal("0.25"):
+                    add(col.label, cell.variable, "se_mismatch", "minor",
+                        cell.paren_raw, f"{r.se:.4g}",
+                        f"Standard errors differ by {se_gap:.1%}. Check the clustering level "
+                        "and the standard-error estimator.")
             t = (q / r.se) if r.se else None
             rep_stars = stars_from(r.pvalue, t)
             if rep_stars is not None and rep_stars != cell.stars:
@@ -183,4 +204,24 @@ def compare(paper: PaperTable, results: list[ResultRow], checklist: Checklist | 
                     "Significance level differs — check standard errors / clustering.")
                 ok = False
             matched += ok
+
+    # A variable-wide diagnosis needs evidence from every model that reports the variable.
+    appearances = Counter(cell.variable.lower() for col in paper.columns for cell in col.cells)
+    tolerance = Decimal(str(rel_tol))
+    for name, columns in scale_samples.items():
+        if len(columns) < 2 or len(columns) != appearances[name]:
+            continue
+        values = columns.values()
+        ratios = [Decimal(str(q)) / Decimal(str(cell.coef)) for cell, q in values]
+        low, high = min(ratios), max(ratios)
+        if low <= 0 or high > low * (1 + tolerance):
+            continue
+        if low <= 1 + tolerance and high >= 1 - tolerance:
+            continue
+        factor = sum(ratios) / len(ratios)
+        variable = next(iter(values))[0].variable
+        add(", ".join(columns), variable, "cross_column_scale", "major" if abs(factor - 1) > MAJOR_REL else "minor",
+            ", ".join(cell.coef_raw for cell, _ in values), ", ".join(f"{q:.4g}" for _, q in values),
+            f"Across these models the replicated coefficients are about {factor:.4g} times the paper values. "
+            f"Check the units and scaling of {variable}.")
     return ComparisonReport(paper.label, total, matched, out, paper.unverified_numbers())
