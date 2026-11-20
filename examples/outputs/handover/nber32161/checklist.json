@@ -1,0 +1,272 @@
+{
+  "source_file": "nber32161.pdf",
+  "content_hash": "a52a7cf4ed64a335f1d06f7bb6ee30a9a4c962bf28cb8c2a506aa3cfb0045053",
+  "table": {
+    "label": "Table 2",
+    "number": 2,
+    "pages": [
+      44
+    ],
+    "caption": "Table 2. ChatGPT Predictions vs. CFO Survey Results",
+    "notes": "This table presents coefficients from a firm-quarter level estimation that regresses the Duke CFO Survey- based measure on the ChatGPT predicted measure of corporate capital expenditure in the next 12 months. ChatGPT Investment Score measures the capital expenditure change predicted by ChatGPT from firms' earnings call transcripts. CFO Survey Investment is the expected capital expenditure change for the next year mentioned by corporate executives during the CFO survey conducted by Duke University. Variables are defined in Appendix A. In all panels, the t-statistics, in parentheses, are based on standard errors clustered by industry. ***, **, * denote statistical significance at the 0.01, 0.05, and 0.10 levels, respectively. (1) (2) CFO Survey Investment ChatGPT Investment Score 30.83*** 21.78*** (4.36) (3.57) IndustryFE N Y YearQtrFE N Y R-squared 0.014 0.070 N 1,338 1,325 42"
+  },
+  "template": "regression",
+  "model_name": "deepseek/deepseek-v4-flash-0731",
+  "items": [
+    {
+      "key": "sample_period",
+      "label": "Sample period",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "2006 to 2020",
+      "evidence": [
+        {
+          "page": 42,
+          "quote": "The sample comprises Compustat firms with earnings conference call transcripts and non-missing financial variables from 2006 to 2020.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "data_sources",
+      "label": "Data sources",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "Compustat",
+        "Duke CFO Survey",
+        "Earnings conference call transcripts"
+      ],
+      "evidence": [
+        {
+          "page": 42,
+          "quote": "Compustat firms with earnings conference call transcripts and non-missing financial variables",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 44,
+          "quote": "CFO survey conducted by Duke University",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "sample_filters",
+      "label": "Sample filters",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "Compustat firms with earnings conference call transcripts and non-missing financial variables from 2006 to 2020",
+        "Merged final sample of conference call data with CFO survey data to obtain 1,338 firm-quarter observations"
+      ],
+      "evidence": [
+        {
+          "page": 42,
+          "quote": "The sample comprises Compustat firms with earnings conference call transcripts and non-missing financial variables from 2006 to 2020.",
+          "verified": true,
+          "page_corrected": false
+        },
+        {
+          "page": 17,
+          "quote": "Merging our final sample of conference call data with the CFO survey data yields a sample of 1,338 firm-quarter observations.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "unit_of_observation",
+      "label": "Unit of observation",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "firm-quarter",
+      "evidence": [
+        {
+          "page": 44,
+          "quote": "This table presents coefficients from a firm-quarter level estimation that regresses the Duke CFO Survey-based measure on the ChatGPT predicted measure of corporate capital expenditure in the next 12 months.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "dependent_var",
+      "label": "Dependent variable",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "CFO Survey Investment: expected capital expenditure change for the next year mentioned by corporate executives during the CFO survey conducted by Duke University",
+      "evidence": [
+        {
+          "page": 44,
+          "quote": "CFO Survey Investment is the expected capital expenditure change for the next year mentioned by corporate executives during the CFO survey conducted by Duke University.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "key_independent_vars",
+      "label": "Key independent variable(s)",
+      "required": true,
+      "extraction_status": "verified",
+      "value": [
+        "ChatGPT Investment Score: capital expenditure change predicted by ChatGPT from firms' earnings call transcripts"
+      ],
+      "evidence": [
+        {
+          "page": 44,
+          "quote": "ChatGPT Investment Score measures the capital expenditure change predicted by ChatGPT from firms' earnings call transcripts.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "controls",
+      "label": "Control variables",
+      "required": true,
+      "extraction_status": "missing",
+      "value": null,
+      "evidence": [],
+      "hint": "Not found by the model. Keywords for this field appear on p.2, p.5, p.6, p.7, p.11, p.15; check them. If the paper does not report it, mark 'Not in paper'.",
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "fixed_effects",
+      "label": "Fixed effects",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "IndustryFE, YearQtrFE",
+      "evidence": [
+        {
+          "page": 44,
+          "quote": "IndustryFE N Y YearQtrFE N Y",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "standard_errors",
+      "label": "Standard errors",
+      "required": true,
+      "extraction_status": "verified",
+      "value": "clustered by industry",
+      "evidence": [
+        {
+          "page": 44,
+          "quote": "the t-statistics, in parentheses, are based on standard errors clustered by industry.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "model",
+      "label": "Estimation method",
+      "required": true,
+      "extraction_status": "missing",
+      "value": null,
+      "evidence": [],
+      "hint": "Not found by the model. Keywords for this field appear on p.3, p.9, p.17, p.18, p.19, p.20; check them. If the paper does not report it, mark 'Not in paper'.",
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "subsamples",
+      "label": "Subsamples / column structure",
+      "required": false,
+      "extraction_status": "verified",
+      "value": "Column (1) has no fixed effects; Column (2) adds IndustryFE and YearQtrFE",
+      "evidence": [
+        {
+          "page": 44,
+          "quote": "IndustryFE N Y YearQtrFE N Y",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "winsorization",
+      "label": "Winsorization / outliers",
+      "required": false,
+      "extraction_status": "verified",
+      "value": "Variables winsorized at 1%",
+      "evidence": [
+        {
+          "page": 42,
+          "quote": "Variables are winsorized at 1%.",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    },
+    {
+      "key": "sample_size",
+      "label": "Reported sample size",
+      "required": false,
+      "extraction_status": "verified",
+      "value": "N = 1,338 (Column 1); N = 1,325 (Column 2)",
+      "evidence": [
+        {
+          "page": 44,
+          "quote": "N 1,338 1,325",
+          "verified": true,
+          "page_corrected": false
+        }
+      ],
+      "hint": null,
+      "review_status": "pending",
+      "user_value": null,
+      "user_note": null
+    }
+  ],
+  "paper_title": null
+}
