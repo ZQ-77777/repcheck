@@ -9,7 +9,7 @@ number, and where to look when you need a figure for the README or the slides.
 |---|---|---|
 | JW2020 gold answers (Tables 2 & 3) | 13 fields each, all citations machine-verified against the published PDF (33/33) | `examples/gold/jw2020_table{2,3}_gold.json` |
 | Live evaluation | Table 3: **12/12 fields, 17/17 quotes verified**; Table 2: **10/12** (both misses explainable) | `examples/outputs/evaluation.md` |
-| Match-threshold experiment | **70/70 true quotes accepted at 90**; 80–85 accept invented quotes | `docs/threshold_results.md`, "Choosing the match threshold (90)" in `docs/DESIGN.md` |
+| Match-threshold experiment | **83/83 true quotes accepted at 90**; 80–85 accept invented quotes | `docs/threshold_results.md`, "Choosing the match threshold (90)" in `docs/DESIGN.md` |
 | Baseline comparison (slide 9) | Raw gpt-4.1-mini **10/11 + 1 invented answer**; raw deepseek 11/11; **0 verifiable quotes from either** | `docs/BASELINE.md` |
 
 ## File map
@@ -35,7 +35,7 @@ Prerequisites: `examples/private/jw2020.pdf` (the published RFS PDF, not in git)
 or needs no key at all.
 
 ```bash
-python -m pytest -q                        # 55 tests, no key, no private PDF needed
+python -m pytest -q                        # full suite, no key, no private PDF needed
 python scripts/threshold_experiment.py     # threshold table; no key; includes the live
                                            # JW2020 quotes when the private PDF is present
 python scripts/run_examples.py --mode live # evaluation.md; cached pairs cost nothing

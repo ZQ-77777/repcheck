@@ -2,7 +2,7 @@
 
 - Paper: Should I Stay or Should I Grow? Using
 - Table: Table3 Higher/lower information asymmetry and positive/negative market reactions (PDF page 14)
-- Model: deepseek/deepseek-v4-flash-0731 · template: regression · exported 2026-11-17 19:39
+- Model: deepseek/deepseek-v4-flash-0731 · template: regression · exported 2026-11-21 09:42
 - Review complete: NO — pending items remain
 
 | Field | Extracted value | Evidence | Check | Review | Final value |

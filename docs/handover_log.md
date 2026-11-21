@@ -29,3 +29,9 @@ Planned:
   program (including table-transcribed evidence such as "N 1,338 1,325"). Output in
   `examples/outputs/handover/nber32161/`.
 - Change made afterwards: none needed — the module behaved as documented.
+
+  Re-check after B's PR #6 landed (2026-11-21, main `655acf5`): the same two commands on the
+  same NBER paper reproduce the original H1 run exactly (17 tables; Table 2 on p.44;
+  11 verified / 2 missing; checklist values, statuses and quotes identical) — the sideways-page
+  changes are backward compatible. Also confirmed on JW2020: Table 4 (printed sideways) now
+  appears in `cli.py tables`, closing the known issue of 2026-11-16.
