@@ -4,7 +4,7 @@
 
 | Example | Fields correct | Wrong | Missed | Unreported → flagged missing | Invented | Quotes verified | Flagged for review | Result check |
 |---|---|---|---|---|---|---|---|---|
-| e1 | 13/13 | 0 | 0 | 0/0 | 0 | 15/16 | 1 | major differences: 7/11 coef. match, 7 issues |
+| e1 | 13/13 | 0 | 0 | 0/0 | 0 | 15/16 | 1 | major differences: 7/11 coef. match, 8 issues |
 | e2 | 11/11 | 0 | 0 | 2/2 | 0 | 12/12 | 0 | match: 7/7 coef. match, 0 issues |
 | jw2020-t2 | 10/12 | 1 | 1 | 1/1 | 0 | 26/26 | 0 | not run (no results CSV) |
 | jw2020-t3 | 12/12 | 0 | 0 | 1/1 | 0 | 17/17 | 0 | not run (no results CSV) |
