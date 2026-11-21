@@ -4,7 +4,7 @@
 
 **Experiment date** November 16, 2026
 
-**Status** Sequential runs scored against the reference answers in PR #3. The results include automatic scores and two sample-size examples.
+**Status** Scores and quote statuses rechecked against main `264fb4f` on November 21, 2026.
 
 ## Setup
 
@@ -84,7 +84,7 @@ Both versions completed 17 of 18 attempts. The `v2` timeout was Flash on Table 3
 
 ### Common metrics
 
-The same criteria apply to both versions. We scored both versions against the same reference answers from [Part D PR #3](https://github.com/ZQ-77777/repcheck/pull/3), commit `0dc3c10`. The next section assesses standardization details requested by v2.
+The same criteria apply to both versions. We scored both versions against the same reference answers from [Part D PR #3](https://github.com/ZQ-77777/repcheck/pull/3), commit `0dc3c10`. The reference scores are detailed below, followed by the standardization results.
 
 | Metric | v1 | v2 |
 | --- | ---: | ---: |
@@ -141,3 +141,17 @@ We checked all 17 successful v2 checklists against the PDF. We counted each corr
 ## Recommendation
 
 GPT-4.1 mini had the lowest median successful runtime on both tables. Flash had the lowest total estimated charge on both tables and more verified items per successful run than GPT-4.1 mini. Pro returned 12 verified items on every successful run and had one timeout. Keep Flash with v1 as the default for this project. It completed all six baseline runs, had the lowest estimated charge on both tables, and scored 69/72 against the references. Use v2 when standardization details are a priority and review the extracted details before reuse. In this experiment, v2 had a higher estimated total charge and a slightly lower automatic reference-answer pass rate. The two versions ran in separate batches with three planned attempts per model and table. Service conditions and the limitations of automatic scoring constrain what these differences tell us about the effect of the prompt change.
+
+## Recheck after the B and D updates
+
+We rechecked the saved runs against main `264fb4f`, including B's parser changes in PR #6 and D's follow-up in PR #7. The two reference-answer files and the scoring functions are unchanged from the versions used for the original scores. Parsing the same local PDF changed the text on page 17. For Tables 2 and 3, the target table metadata, selected pages and model-facing text remained identical. Keyword-hit metadata changed for page 17. Rechecking every saved quote against the updated full-PDF text preserved its matched status and page number. The totals remain 193/204 for v1 and 188/204 for v2. These are rescored historical runs, with the originally measured timing and charges. Validation on the updated code passed 64 tests and 10 subtests.
+
+## Slide data
+
+| Model (v1) | Completed | Median time, T2 / T3 | Estimated total cost (HKD) | Automatic reference check |
+| --- | ---: | ---: | ---: | ---: |
+| GPT-4.1 mini | 6/6 | 16.5 / 16.7 s | 0.28 | 67/72 |
+| DeepSeek V4 Flash | 6/6 | 56.5 / 54.3 s | 0.14 | 69/72 |
+| DeepSeek V4 Pro | 5/6 | 64.9 / 92.5 s | 2.47 | 57/60 |
+
+Recommended default is Flash + v1 for this project. The optional v2 prompt correctly reported 49/76 standardization details, with direct quote support for 46. Times and reference scores use completed runs. Estimated costs include balance decreases observed around timeouts. The automatic reference check uses word overlap and can pass incomplete answers.

@@ -31,7 +31,8 @@ peer ratings are based on this file.
 ## Xinyi Dou (Member C) — prompts and model comparison
 - Ran the sequential comparison of three models on JW2020 Tables 2 and 3 and analyzed the stability of the extracted answers and evidence.
 - Added an optional v2 extraction prompt and compared runtime, estimated cost, quote matching and coverage of standardization details.
-- Wrote the model comparison report. Field accuracy is pending review against the reference answers.
+- Wrote the model comparison report and slide data. Scored all 34 successful checklists against D's reference answers and rechecked scores and quote statuses after B's parser update on November 21, 2026.
+- Pull requests: #1, #8.
 
 ## Member D — evaluation and baseline
 - Wrote the JW2020 gold answers against the published RFS PDF, independently of the drafter:
