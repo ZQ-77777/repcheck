@@ -7,7 +7,7 @@ peer ratings are based on this file.
 - v0.1 code, tests, synthetic examples and documents were drafted by Zhang Qi with AI assistance (Claude,
   Anthropic) as a starting point. Each module then has an owner who reviews, tests and extends it.
 
-## Zhang Qi (A, 22338115) — design, coordination and integration
+## Zhang Qi (A, 21358199) — design, coordination and integration
 - Chose the topic and designed the two-stage tool (specification checklist, then result check), the
   module pipeline and the shared interfaces in `schemas.py`; built the v0.1 baseline with tests,
   synthetic examples, mock mode and the HKUST GenAI API connection (header and temperature handling).
