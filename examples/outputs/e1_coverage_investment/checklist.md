@@ -2,7 +2,7 @@
 
 - Paper: Analyst Coverage and Corporate Investment
 - Table: Table 3 Analyst Coverage and Corporate Investment (PDF page 4)
-- Model: mock: hand-written fixture — replace by a real live-mode run · template: regression · exported 2026-11-16 03:13
+- Model: deepseek/deepseek-v4-flash-0731 · template: regression · exported 2026-11-21 09:42
 - Review complete: NO — pending items remain
 
 | Field | Extracted value | Evidence | Check | Review | Final value |

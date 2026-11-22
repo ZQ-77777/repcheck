@@ -1,6 +1,6 @@
 {
   "source_file": "jw2020.pdf",
-  "content_hash": "dcca6cebd11920be32670695a2854f4fabba14e7aa4250b59f6282f063de923d",
+  "content_hash": "ac05a30d394b89c63069afb1aaa94830b266f480c4643b7c674e0572d7961ddb",
   "table": {
     "label": "Table 3",
     "number": 3,
@@ -40,12 +40,13 @@
       "value": [
         "IBES Guidance",
         "Compustat",
-        "CRSP"
+        "CRSP",
+        "PIN data from Brown et al. (2004)"
       ],
       "evidence": [
         {
           "page": 8,
-          "quote": "capex forecasts from IBES Guidance, accounting data from Compustat, stock price data from CRSP",
+          "quote": "Our data come from several sources: capex forecasts from IBES Guidance, accounting data from Compustat, stock price data from CRSP, and Easley et al.'s (1996) probability of informed trading (PIN) data from Brown et al. (2004).",
           "verified": true,
           "page_corrected": false
         }
@@ -61,15 +62,16 @@
       "required": true,
       "extraction_status": "verified",
       "value": [
-        "Begin with firms making annual capex forecasts as covered by IBES and match to Compustat using the IBES link file",
-        "Match forecasts with CRSP to obtain short-window market reaction on the issuance date",
-        "Delete forecasts made concurrently with an earnings forecast",
-        "Delete forecasts made in 2016 because actual capital expenditure data as of end of year needed"
+        "Start with firms making annual capex forecasts from IBES",
+        "Match to Compustat using IBES link file",
+        "Match with CRSP to obtain market reaction",
+        "Delete forecasts made concurrently with earnings forecast",
+        "Delete forecasts made in 2016"
       ],
       "evidence": [
         {
           "page": 8,
-          "quote": "To construct the sample, we begin with firms making annual capex forecasts (as covered by IBES) and match these firms to Compustat using the IBES link file.",
+          "quote": "we begin with firms making annual capex forecasts (as covered by IBES) and match these firms to Compustat using the IBES link file.",
           "verified": true,
           "page_corrected": false
         },
@@ -81,7 +83,7 @@
         },
         {
           "page": 8,
-          "quote": "We delete 17,473 forecasts that are made concurrently with an earnings forecast and another 1,850 that are made in 2016 because we need actual capital expenditure data as of the end of the year.",
+          "quote": "We delete 17,473 forecasts that are made concurrently with an earnings forecast and another 1,850 that are made in 2016",
           "verified": true,
           "page_corrected": false
         }
@@ -148,7 +150,7 @@
         },
         {
           "page": 14,
-          "quote": "Models 3 and 4 present results based on splitting CAR into two variables: CAR_POS denoting positive market reactions, and zero otherwise; and CAR_NEG denoting negative market reactions, and zero otherwise.",
+          "quote": "CAR_POS denoting positive market reactions, and zero otherwise; and CAR_NEG denoting negative market reactions, and zero otherwise.",
           "verified": true,
           "page_corrected": false
         }
@@ -164,53 +166,23 @@
       "required": true,
       "extraction_status": "verified",
       "value": [
-        "MKTRET: market returns measured using the S&P 500 index on the capex forecast date",
-        "CAR_PRE: pseudo-market reactions defined as the 5-day market reaction around a nonforecast date, defined as 2 weeks prior to the capex forecast date",
         "SIZE: firm size defined as the log of market value of equity",
-        "LAG_CAPX: the most recent year's annual capex (in US$ millions)",
+        "LAG_CAPX: the most recent year's annual capex scaled by start of year market value",
         "SURP: earnings surprise for the most recent quarter defined as the quarter's earnings-per-share minus that of the same quarter of the previous year",
-        "EA_DUM: indicator variable to denote capex announcements that are accompanied by earnings announcements"
+        "EA_DUM: an indicator variable to denote capex announcements that are accompanied by earnings announcements",
+        "MKTRET: market returns measured using the S&P 500 index on the capex forecast date",
+        "CAR_PRE: pseudo-market reactions defined as the 5-day market reaction around a nonforecast date, defined as 2 weeks prior to the capex forecast date"
       ],
       "evidence": [
         {
-          "page": 14,
-          "quote": "All models include the entire set of control variables as in Model 9 of Table 2, but these have not been presented for parsimony.",
+          "page": 8,
+          "quote": "We control for additional firm-level characteristics in the regression, such as size, defined as the log of market value of equity (SIZE), the most recent year's annual capex (LAG_CAPX), the earnings surprise for the most recent quarter (SURP) defined as the quarter's earnings-per-share minus that of the same quarter of the previous year, and an indicator variable to denote capex announcements that are accompanied by earnings announcements (EA_DUM).",
           "verified": true,
           "page_corrected": false
         },
         {
           "page": 14,
-          "quote": "MKTRET denotes market returns measured using the S&P 500 index on the capex forecast date.",
-          "verified": true,
-          "page_corrected": false
-        },
-        {
-          "page": 14,
-          "quote": "CAR_PRE denotes pseudo-market reactions defined as the 5-day market reaction around a nonforecast date, defined as 2 weeks prior to the capex forecast date.",
-          "verified": true,
-          "page_corrected": false
-        },
-        {
-          "page": 9,
-          "quote": "SIZE denotes firm size defined as the log of market value of equity",
-          "verified": true,
-          "page_corrected": false
-        },
-        {
-          "page": 9,
-          "quote": "LAG_CAPX denotes the most recent year's annual capex (in US$ millions).",
-          "verified": true,
-          "page_corrected": false
-        },
-        {
-          "page": 9,
-          "quote": "SURP denotes earnings surprise for the most recent quarter defined as the quarter's earnings-per-share minus that of the same quarter of the previous year.",
-          "verified": true,
-          "page_corrected": false
-        },
-        {
-          "page": 9,
-          "quote": "EA_DUM is an indicator variable to denote capex announcements that are accompanied by earnings announcements.",
+          "quote": "MKTRET denotes market returns measured using the S&P 500 index on the capex forecast date. CAR_PRE denotes pseudo-market reactions defined as the 5-day market reaction around a nonforecast date, defined as 2 weeks prior to the capex forecast date.",
           "verified": true,
           "page_corrected": false
         }
@@ -229,7 +201,7 @@
       "evidence": [
         {
           "page": 14,
-          "quote": "In addition, all models include firm and year-quarter fixed effects and robust standard errors clustered by industry.",
+          "quote": "all models include firm and year-quarter fixed effects",
           "verified": true,
           "page_corrected": false
         }
@@ -244,11 +216,11 @@
       "label": "Standard errors",
       "required": true,
       "extraction_status": "verified",
-      "value": "robust standard errors clustered by industry",
+      "value": "clustered by industry",
       "evidence": [
         {
           "page": 14,
-          "quote": "In addition, all models include firm and year-quarter fixed effects and robust standard errors clustered by industry.",
+          "quote": "robust standard errors clustered by industry",
           "verified": true,
           "page_corrected": false
         }
@@ -267,7 +239,7 @@
       "evidence": [
         {
           "page": 10,
-          "quote": "we regress the percentage deviation between the annual capex and the forecasted amount (i.e., CAPEX_ADJ) on the market reaction to the capex forecast (i.e., CAR).",
+          "quote": "we estimate the following regression: CAPEX_ADJ i,f=α i+γ t+β 1 CAR i,a+β 2 SIZE i,a-1 +ε i,f",
           "verified": true,
           "page_corrected": false
         }
@@ -282,11 +254,11 @@
       "label": "Subsamples / column structure",
       "required": false,
       "extraction_status": "verified",
-      "value": "Columns 1 and 3: lower bid-ask spreads in event-window (days [-2,2]) vs pre-event (days [-10,-3]); Columns 2 and 4: higher bid-ask spreads. Models 1-2 use CAR; Models 3-4 split CAR into CAR_POS and CAR_NEG.",
+      "value": "Columns 1 and 3: lower bid-ask spreads in event-window vs pre-event; Columns 2 and 4: higher bid-ask spreads. Columns 3-4 additionally split CAR into CAR_POS and CAR_NEG.",
       "evidence": [
         {
-          "page": 13,
-          "quote": "We measure information asymmetry using bid-ask spreads and partition the sample into instances where event-period (i.e., day [-2, 2]) spreads are higher than those in the pre-event period (i.e., day [-10, -3]) versus those where they are lower.",
+          "page": 14,
+          "quote": "Columns 1 and 3 present results for sample of capex forecasts with lower bid-ask spreads in the event-window (i.e., days [-2, 2]) as compared to the pre-event window (i.e., days [-10, -3]), and Columns 2 and 4 present results for forecasts with higher bid-ask spreads.",
           "verified": true,
           "page_corrected": false
         },
@@ -319,11 +291,11 @@
       "label": "Reported sample size",
       "required": false,
       "extraction_status": "verified",
-      "value": "7,770 (Lower spreads); 9,570 (Higher spreads)",
+      "value": "7,770 and 9,570",
       "evidence": [
         {
           "page": 14,
-          "quote": "Obs. 7,770 9,570 7,770 9,570",
+          "quote": "Obs. 7,770 9,570",
           "verified": true,
           "page_corrected": false
         }

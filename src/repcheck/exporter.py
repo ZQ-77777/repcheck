@@ -128,7 +128,9 @@ def skeleton_context(c: Checklist) -> dict:
             variables.append({"name": name, "definition": definition})
 
     fe_text = " ".join(_as_list(get("fixed_effects")))
-    fe = [t for t in FE_TOKENS if t in fe_text.lower()]
+    low = re.sub(r"year[\s-]quarter", "year_quarter", fe_text.lower())   # one FE, not year + quarter
+    fe = [t for t in FE_TOKENS if t in low.replace("year_quarter", "")]
+    fe += ["year_quarter"] if "year_quarter" in low else []
     lhs = dep[0][0] if dep else "Y_TODO"
     rhs = " + ".join(n for n, _ in keys + ctrls) or "X_TODO"
     formula = f"{lhs} ~ {rhs}" + (f" | {' + '.join(fe)}" if fe else "")
@@ -170,13 +172,15 @@ def render_skeleton(c: Checklist) -> str:
 
 
 # -------------------------------------------------------------------------------- report
-KIND_ORDER = ["column_missing", "n_mismatch", "variable_missing", "sign_flip", "scale", "magnitude",
-              "significance"]
+KIND_ORDER = ["column_missing", "n_mismatch", "variable_missing", "sign_flip", "scale", "cross_column_scale",
+              "magnitude", "significance", "se_mismatch"]
 KIND_TITLES = {
     "column_missing": "Missing columns", "n_mismatch": "Sample size differs",
     "variable_missing": "Variables missing from the replication", "sign_flip": "Opposite signs",
     "scale": "Units / scaling differ", "magnitude": "Coefficient magnitudes differ",
+    "cross_column_scale": "Consistent scaling across models",
     "significance": "Significance levels differ",
+    "se_mismatch": "Standard errors differ",
 }
 
 def report_to_markdown(r: ComparisonReport) -> str:
@@ -199,9 +203,12 @@ def report_to_markdown(r: ComparisonReport) -> str:
         group = [d for d in r.discrepancies if d.kind == kind]
         if not group:
             continue
-        where = sorted({d.column for d in group})
-        lines.append(f"**{KIND_TITLES[kind]}** ({len(group)}× in column{'s' * (len(where) > 1)} "
-                     f"{', '.join(where)}) — re-check:")
+        if kind == "cross_column_scale":
+            location = "across model columns"
+        else:
+            where = sorted({d.column for d in group})
+            location = f"in column{'s' * (len(where) > 1)} {', '.join(where)}"
+        lines.append(f"**{KIND_TITLES[kind]}** ({len(group)}× {location}) — re-check:")
         notes = list(dict.fromkeys(n for d in group for n in d.suspect_notes)) or \
             [f"`{k}`" for k in group[0].suspects]
         lines += [f"- {n}" for n in notes]

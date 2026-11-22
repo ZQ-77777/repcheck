@@ -1,0 +1,111 @@
+warning: in the working copy of '.env.example', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.gitattributes', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.github/pull_request_template.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.github/workflows/tests.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'cli.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/CONTRIBUTIONS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/DESIGN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/handover_log.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/cache/spec_00a8cbd7654e_table2_regression_v1.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/cache/spec_b53ba8a0182a_table3_regression_v1.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/cache/spec_dcca6cebd119_table3_regression_v1.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/cache/table_00a8cbd7654e_table2_v1.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/cache/table_b53ba8a0182a_table3_v1.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/gold/e1_gold.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/gold/e2_gold.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/gold/jw2020_table3_gold.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/inputs/e1_replication_results.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/inputs/e2_replication_results.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/inputs/f2_bad_results.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/e1_coverage_investment/checklist.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/e1_coverage_investment/checklist.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/e1_coverage_investment/checklist_reviewed.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/e1_coverage_investment/checklist_reviewed.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/e1_coverage_investment/comparison.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/e1_coverage_investment/comparison.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/e1_coverage_investment/skeleton.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/e2_board_payout/checklist.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/e2_board_payout/checklist.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/e2_board_payout/comparison.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/e2_board_payout/comparison.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/evaluation.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/jw2020/table2/checklist.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/jw2020/table2/checklist.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/jw2020/table3/checklist.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'examples/outputs/jw2020/table3/checklist.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'pytest.ini', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'requirements-dev.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'requirements.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/make_examples.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/run_examples.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/checklist_templates.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/comparator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/exporter.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/extractor.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/llm/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/llm/base.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/llm/cache.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/llm/factory.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/llm/openai_compat.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/llm/prompts/extract_spec_v1.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/llm/prompts/extract_table_v1.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/pdf_parser.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/pipeline.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/result_export.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/retriever.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/review.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/schemas.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/table_locator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/table_numbers.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/templates/skeleton.py.j2', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/text_utils.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/repcheck/verifier.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/fixtures/cache/spec_00a8cbd7654e_table2_regression_v1.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/fixtures/cache/spec_b53ba8a0182a_table3_regression_v1.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/fixtures/cache/table_00a8cbd7654e_table2_v1.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/fixtures/cache/table_b53ba8a0182a_table3_v1.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/helpers.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_app_ui.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_comparator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_live_provider.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_llm_pipeline.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_parser_locator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_result_export.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_retriever_verifier.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_review_export.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_text_utils.py', LF will be replaced by CRLF the next time Git touches it
+ README.md                                          |  44 [32m++++[m[31m-----[m
+ app.py                                             |   5 [32m+[m[31m-[m
+ docs/CONTRIBUTIONS.md                              |  64 [32m++++++++++[m[31m---[m
+ docs/DESIGN.md                                     |  21 [32m+++++[m
+ docs/handover_log.md                               |  42 [32m+++++++[m[31m--[m
+ examples/gold/jw2020_table3_gold.json              |   4 [32m+[m[31m-[m
+ .../outputs/e1_coverage_investment/checklist.json  |   2 [32m+[m[31m-[m
+ .../outputs/e1_coverage_investment/checklist.md    |   2 [32m+[m[31m-[m
+ .../outputs/e1_coverage_investment/comparison.json |  15 [32m+++[m
+ .../outputs/e1_coverage_investment/comparison.md   |   4 [32m+[m
+ examples/outputs/e2_board_payout/checklist.json    |   2 [32m+[m[31m-[m
+ examples/outputs/e2_board_payout/checklist.md      |   2 [32m+[m[31m-[m
+ examples/outputs/evaluation.md                     |  44 [32m++++++++[m[31m-[m
+ examples/outputs/jw2020/table2/checklist.json      | 105 [32m+++++++++++++++[m[31m------[m
+ examples/outputs/jw2020/table2/checklist.md        |  17 [32m++[m[31m--[m
+ examples/outputs/jw2020/table3/checklist.json      |  84 [32m++++++[m[31m-----------[m
+ examples/outputs/jw2020/table3/checklist.md        |  20 [32m++[m[31m--[m
+ scripts/run_examples.py                            |   5 [32m+[m
+ slides/RepCheck_presentation.pptx                  | Bin [31m60781[m -> [32m61349[m bytes
+ src/repcheck/comparator.py                         |  41 [32m++++++++[m
+ src/repcheck/exporter.py                           |  19 [32m++[m[31m--[m
+ src/repcheck/pdf_parser.py                         |  63 [32m+++++++++++++[m
+ src/repcheck/result_export.py                      |  41 [32m++++++++[m
+ src/repcheck/schemas.py                            |   2 [32m+[m[31m-[m
+ src/repcheck/table_locator.py                      |  31 [32m+++++[m[31m-[m
+ tests/test_comparator.py                           |  54 [32m+++++++++++[m
+ tests/test_llm_pipeline.py                         |   4 [32m+[m[31m-[m
+ tests/test_parser_locator.py                       |  48 [32m+++++++++[m[31m-[m
+ tests/test_result_export.py                        |  18 [32m++++[m
+ tests/test_review_export.py                        |   6 [32m++[m
+ 30 files changed, 644 insertions(+), 165 deletions(-)

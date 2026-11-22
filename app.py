@@ -132,7 +132,9 @@ with tab_spec:
             spec = fields[item.key]
             title = f"{STATUS_BADGE[item.extraction_status]} · {item.label}{' *' if item.required else ''}" \
                     f" — {ACTION_LABEL[item.review_status]}"
-            with st.expander(title, expanded=item.review_status == ReviewStatus.PENDING):
+            # keep an item open while it is being edited (its title changes, which would collapse it)
+            with st.expander(title, expanded=item.review_status == ReviewStatus.PENDING
+                             or state.get("open_item") == item.key):
                 if item.value is not None:
                     st.markdown("\n".join(f"- {v}" for v in item.value) if isinstance(item.value, list)
                                 else item.value)
@@ -162,6 +164,7 @@ with tab_spec:
                         (note or None) != item.user_note:
                     try:
                         apply_review(checklist, item.key, action, user_value, note)
+                        state.open_item = item.key if action == ReviewStatus.EDITED else None
                         st.rerun()
                     except ValueError as exc:
                         st.warning(str(exc))

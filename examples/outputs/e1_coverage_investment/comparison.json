@@ -48,6 +48,21 @@
     {
       "column": "(2)",
       "variable": "MTB",
+      "kind": "se_mismatch",
+      "severity": "minor",
+      "paper": "(0.0011)",
+      "replicated": "0.003",
+      "message": "Standard errors differ by 172.7%. Check the clustering level and the standard-error estimator.",
+      "suspects": [
+        "standard_errors"
+      ],
+      "suspect_notes": [
+        "Standard errors: Clustered at the firm level (p.3)"
+      ]
+    },
+    {
+      "column": "(2)",
+      "variable": "MTB",
       "kind": "significance",
       "severity": "minor",
       "paper": "0.0064*** (3 stars)",

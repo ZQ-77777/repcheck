@@ -66,6 +66,12 @@ class ExportTest(unittest.TestCase):
         self.assertIn("{'CRV1': 'firm'}", code)
         self.assertIn("SAMPLE_START, SAMPLE_END = 2003, 2019", code)
 
+    def test_year_quarter_fixed_effect_is_one_term(self):
+        c = fresh()
+        confirm_all(c)
+        apply_review(c, "fixed_effects", "edited", "firm and year-quarter fixed effects")
+        self.assertIn("| firm + year_quarter", render_skeleton(c))
+
     def test_rejected_items_never_reach_the_skeleton(self):
         c = fresh()
         confirm_all(c)

@@ -8,6 +8,7 @@
 |---|---|---|---|---|---|---|
 | (1) | — | n_mismatch | major | 24,318 | 23,104 | N differs by -5.0%; coefficient differences in this column may follow from the sample difference. |
 | (2) | — | n_mismatch | major | 24,318 | 23,104 | N differs by -5.0%; coefficient differences in this column may follow from the sample difference. |
+| (2) | MTB | se_mismatch | minor | (0.0011) | 0.003 | Standard errors differ by 172.7%. Check the clustering level and the standard-error estimator. |
 | (2) | MTB | significance | minor | 0.0064*** (3 stars) | 2 stars | Significance level differs — check standard errors / clustering. |
 | (3) | — | n_mismatch | major | 24,318 | 23,104 | N differs by -5.0%; coefficient differences in this column may follow from the sample difference. |
 | (3) | LEV | magnitude | major | -0.0398*** | -0.0286 | Magnitude differs by 28%. |
@@ -38,3 +39,6 @@
 **Significance levels differ** (1× in column (2)) — re-check:
 - Standard errors: Clustered at the firm level (p.3)
 - Fixed effects: Firm and year fixed effects (p.3)
+
+**Standard errors differ** (1× in column (2)) — re-check:
+- Standard errors: Clustered at the firm level (p.3)
