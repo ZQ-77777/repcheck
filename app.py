@@ -1,17 +1,22 @@
 """M5 — RepCheck web app.   Run:  streamlit run app.py
 
-Tab 1  Spec checklist : upload a paper, pick a table, review each extracted item, export.
+Tab 1  Spec checklist : upload a paper, pick a table, review each extracted item, export;
+                        "Show source text" under each quote; continue a saved review from its JSON.
 Tab 2  Result check   : upload replication results (CSV) and get a discrepancy report.
 All logic lives in src/repcheck; this file only handles layout and session state.
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import os
+import re
 import sys
 import tempfile
 from pathlib import Path
 
 import streamlit as st
+from streamlit.errors import StreamlitAPIException
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))
@@ -25,8 +30,9 @@ from repcheck.llm.factory import default_mode                                 # 
 from repcheck.pdf_parser import InvalidPDFError, ScannedPDFError, file_hash   # noqa: E402
 from repcheck.pipeline import load_paper, run_compare, run_spec               # noqa: E402
 from repcheck.review import apply_review, parse_user_value, progress          # noqa: E402
-from repcheck.schemas import ExtractionStatus, ReviewStatus                   # noqa: E402
+from repcheck.schemas import Checklist, ExtractionStatus, ReviewStatus        # noqa: E402
 from repcheck.table_locator import TableNotFoundError, list_tables            # noqa: E402
+from repcheck.text_utils import quote_context                                 # noqa: E402
 
 USER_ERRORS = (InvalidPDFError, ScannedPDFError, TableNotFoundError, LLMError, ResultsFormatError, ValueError)
 INPUTS = ROOT / "examples" / "inputs"
@@ -93,7 +99,7 @@ if pdf_path is None:
 
 pdf_id = file_hash(pdf_path)
 if state.get("pdf_id") != pdf_id:                   # new paper -> reset everything
-    for k in ("paper", "checklist", "report", "paper_table", "pdf_id"):
+    for k in ("paper", "checklist", "report", "paper_table", "pdf_id", "restored_upload", "restore_message"):
         state.pop(k, None)
     try:
         state.paper = load_paper(pdf_path)
@@ -109,6 +115,51 @@ st.caption(f"{pdf_path.name} · {len(paper.pages)} pages · tables found: {', '.
 default_table = EXAMPLES[source][1] if source in EXAMPLES else (tables[-1] if tables else "Table 1")
 table_label = st.text_input("Table to replicate", value=default_table, help='e.g. "Table 3", "3" or "III"')
 
+_MD_SPECIAL = re.compile(r"([\\`*_{}\[\]()#+\-.!|$<>~:])")
+
+
+def _md(text: str) -> str:
+    """Show PDF text literally in st.markdown (no LaTeX from "$", no stray emphasis)."""
+    return _MD_SPECIAL.sub(r"\\\1", " ".join(text.split()))
+
+
+def show_sources(evidence, pages: dict) -> None:
+    """Page text around each quote, matched span in bold (same matching as the verifier)."""
+    for e in evidence:
+        ctx = quote_context(pages.get(e.page, ""), e.quote)
+        if ctx is None:
+            st.caption(f"p.{e.page}: the quote could not be located on this page.")
+            continue
+        before, rest = ctx.split("[[", 1)
+        match, after = rest.split("]]", 1)
+        st.markdown(f"p.{e.page}: …{_md(before)}**{_md(match)}**{_md(after)}…")
+
+
+def restore_review(uploaded) -> None:
+    """Load a review saved with "Checklist (.json)". Applied once per uploaded file."""
+    data = uploaded.getvalue()
+    upload_id = hashlib.sha256(data).hexdigest() + uploaded.name
+    if state.get("restored_upload") == upload_id:
+        return
+    state.restored_upload = upload_id
+    try:
+        restored = Checklist.from_dict(json.loads(data.decode("utf-8-sig")))
+    except (ValueError, KeyError, TypeError, AttributeError) as exc:
+        state.restore_message = ("error", f"Could not read this file as a saved RepCheck review "
+                                          f"({type(exc).__name__}: {exc}).")
+        return
+    state.checklist = restored
+    state.review_version = state.get("review_version", 0) + 1   # fresh widget keys: no stale decisions
+    state.open_item = None
+    if restored.content_hash != paper.content_hash:
+        state.restore_message = ("warning", f"This review was saved for a different paper "
+                                            f"({restored.source_file}). Its quotes and page numbers "
+                                            f"may not match the PDF that is open.")
+    else:
+        done, total = progress(restored)
+        state.restore_message = ("success", f"Review restored: {done}/{total} required items already decided.")
+
+
 tab_spec, tab_check = st.tabs(["1 · Spec checklist", "2 · Result check"])
 
 # ------------------------------------------------------------------------- tab 1: spec
@@ -117,8 +168,21 @@ with tab_spec:
         try:
             with st.spinner("Locating the table, selecting pages and asking the model…"):
                 state.checklist = run_spec(paper, table_label, get_provider(mode))
+            state.review_version = state.get("review_version", 0) + 1
+            state.pop("restore_message", None)
         except USER_ERRORS as exc:
             show_error(exc)
+
+    saved = st.file_uploader("Continue a saved review (.json)", type=["json"], key=f"resume_{state.pdf_id}",
+                             help='Upload a file saved with "Checklist (.json)" to pick up where you left off.')
+    if saved is not None:
+        restore_review(saved)
+    else:
+        state.pop("restored_upload", None)
+        state.pop("restore_message", None)
+    if state.get("restore_message"):
+        kind, message = state.restore_message
+        {"error": st.error, "warning": st.warning, "success": st.success}[kind](message)
 
     checklist = state.get("checklist")
     if checklist is not None:
@@ -127,6 +191,7 @@ with tab_spec:
         done, total = progress(checklist)
         st.progress(done / total if total else 1.0, text=f"Required items reviewed: {done}/{total}")
         fields = {f.key: f for f in get_template(checklist.template)}
+        page_text = {p.number: p.text for p in paper.pages}
 
         for item in checklist.items:
             spec = fields[item.key]
@@ -142,15 +207,24 @@ with tab_spec:
                     mark = "✅" if e.verified else "⚠️ not found in PDF"
                     moved = " (page corrected)" if e.page_corrected else ""
                     st.caption(f"{mark} p.{e.page}{moved}: “{e.quote}”")
+                sources_pending = bool(item.evidence)
+                if sources_pending:
+                    try:
+                        with st.expander("Show source text"):
+                            show_sources(item.evidence, page_text)
+                        sources_pending = False
+                    except StreamlitAPIException:     # Streamlit versions that forbid nested expanders
+                        pass
                 if item.hint:
                     st.info(item.hint)
 
                 options = list(ReviewStatus)
                 if item.value is None:
                     options.remove(ReviewStatus.CONFIRMED)
-                key = f"{checklist.content_hash}_{item.key}"
+                # versioned keys: a restored or re-extracted review is not overwritten by old widget state
+                key = f"{checklist.content_hash}_{state.get('review_version', 0)}_{item.key}"
                 action = st.radio("Decision", options, key=f"act_{key}", horizontal=True,
-                                  index=options.index(item.review_status),
+                                  index=options.index(item.review_status) if item.review_status in options else 0,
                                   format_func=lambda s: ACTION_LABEL[s])
                 user_value = None
                 if action == ReviewStatus.EDITED:
@@ -168,6 +242,9 @@ with tab_spec:
                         st.rerun()
                     except ValueError as exc:
                         st.warning(str(exc))
+            if sources_pending:
+                with st.expander("Show source text"):   # placed right below its item
+                    show_sources(item.evidence, page_text)
 
         st.divider()
         stem = Path(checklist.source_file).stem
