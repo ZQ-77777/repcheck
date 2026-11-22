@@ -14,7 +14,7 @@ peer ratings are based on this file.
   paper showed it was missing; connected the HKUST GenAI API.
 - Pull requests:
 
-## Member B — PDF parsing and table locating
+## Tang Yunshu(21275921) — PDF parsing and table locating
 - Root-caused the missing JW2020 Table 4: the page is printed sideways (95% of its characters are
   rotated 90°), so pdfplumber returned the caption reversed as `4elbaT` and no caption line matched.
   Sideways pages are now re-flowed from character boxes, one block per rotation angle, in
@@ -27,6 +27,8 @@ peer ratings are based on this file.
 - Added `scripts/make_fixtures.py` with `tests/fixtures/rotated_tables.pdf` (rotated block + banner +
   270° sidebar, a `/Rotate 90` page and an upright control) and 5 new tests (64 in the suite after PR #5 merged, all passing).
 - Pull requests: #6
+## AI usage statement
+- For the PDF-parsing and table-locating part I used an AI coding assistant (DeepSeek Harness) as a pair programmer. It implemented the per-angle re-flow in pdf_parser.py, generated the synthetic rotated-page fixture, drafted the five new tests and produced the first draft of docs/PARSER_NOTES.md. I set the task, supplied the published JW2020 PDF and verified every claim against the actual pages: the before/after cli.py tables output, the page of Table 4 (PDF p. 17, printed p. 3870) and the 22/22 table count for the AER, TAR and JFE papers all come from running the code, not from the model. All AI-written code and prose were read, executed and edited before the pull request, and the copyrighted paper PDF stays local and is never committed.
 
 ## Xinyi Dou (Member C) — prompts and model comparison
 - Ran the sequential comparison of three models on JW2020 Tables 2 and 3 and analyzed the stability of the extracted answers and evidence.
