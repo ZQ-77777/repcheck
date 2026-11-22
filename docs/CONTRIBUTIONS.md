@@ -45,11 +45,18 @@ peer ratings are based on this file.
 ### AI usage statement (Tang Yunshu)
 - For the PDF-parsing and table-locating part I used an AI coding assistant (DeepSeek Harness) as a pair programmer. It implemented the per-angle re-flow in pdf_parser.py, generated the synthetic rotated-page fixture, drafted the five new tests and produced the first draft of docs/PARSER_NOTES.md. I set the task, supplied the published JW2020 PDF and verified every claim against the actual pages: the before/after cli.py tables output, the page of Table 4 (PDF p. 17, printed p. 3870) and the 22/22 table count for the AER, TAR and JFE papers all come from running the code, not from the model. All AI-written code and prose were read, executed and edited before the pull request, and the copyrighted paper PDF stays local and is never committed.
 
-## Dou Xinyi (C) — prompts and model comparison
-- Ran the sequential comparison of three models on JW2020 Tables 2 and 3 and analyzed the stability of the extracted answers and evidence.
-- Added an optional v2 extraction prompt and compared runtime, estimated cost, quote matching and coverage of standardization details.
-- Wrote the model comparison report and slide data. Scored all 34 successful checklists against D's reference answers and rechecked scores and quote statuses after B's parser update on November 21, 2026.
+## Xinyi Dou (21357339) — prompts and model comparison
+
+- Ran the sequential comparison of GPT-4.1 mini, DeepSeek V4 Flash and DeepSeek V4 Pro on JW2020 Tables 2 and 3, with three planned attempts per model and table and separate caches for each attempt. Recorded completion status, elapsed time and API balance changes.
+- Compared repeated outputs to identify changes in answers and evidence. Evaluated the optional v2 prompt requesting explicit units, scaling and standardization details.
+- Produced the English model comparison report and slide data, including runtime, estimated cost, automatic quote matching, reference-answer scores and a recommendation to retain Flash with v1 as the default.
+- Used D's reference answers to score the 34 successful checklists across v1 and v2, and rechecked the scores and quote statuses after B's parser update.
 - Pull requests: #1, #8.
+
+### AI usage statement
+
+I used OpenAI Codex to help prepare experiment commands, draft the optional v2 prompt, compare saved outputs, run the reference-answer scoring and tests, and draft and revise the report, slide data and contribution record. Codex also compared standardization statements and their supporting quotes with the PDF and rechecked compatibility after B's parser update. I ran the model experiments, supplied the terminal results and API balance readings, reviewed the report, questioned the scoring criteria and interpretation of the results, and requested revisions. The reference-answer scores use the project's automatic word-overlap evaluator. Codex assisted with checks against the PDF and the interpretation of output differences.
+
 
 ## Xu Fanqi (D, 21355721) — evaluation and baseline
 - Wrote the JW2020 gold answers against the published RFS PDF, independently of the drafter:
