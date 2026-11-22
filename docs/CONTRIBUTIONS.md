@@ -85,9 +85,36 @@ peer ratings are based on this file.
   edited everything before opening each pull request. All reported figures come from running
   the code, not from the model, and the copyrighted paper PDF stays local and is never committed.
 
-## Du Yunhe (E) — integration, debugging and paper cross-checks
-- Helped integrate and debug the merged modules.
-- Cross-checked the paper facts and page references used in the examples and slides.
+## Du Yunhe (E, 21419400) — web interface, handover and install test
+- Added a "Show source text" panel under every evidence quote in `app.py`: ~200 characters of the
+  page text around the matched span with the match highlighted, located by a new `quote_context`
+  helper in `text_utils.py` that reuses the verifier's normalization (hyphen joins, lost word
+  spaces, curly quotes), so the UI always shows the same span the check accepted. An off-by-one in
+  the window slicing was caught by the new unit tests before it reached the UI.
+- Added "Continue review" to `app.py`: uploading a previously exported `checklist.json` restores
+  decisions, notes and the review gate through `Checklist.from_dict`, and a paper-fingerprint
+  mismatch (`content_hash`) shows a visible warning instead of silently applying one paper's
+  confirmed values to another. Widget keys are versioned so restored decisions are not overwritten
+  by stale radio state.
+- Handover H3 (2026-11-22): installed and ran the project following only `README.md` in a fresh
+  venv, and documented two README bugs in `docs/handover_log.md` — `python -m venv` does not exist
+  on a stock Mac, and pytest is missing from the documented install step. Fixed both in the README
+  and resolved the committed merge-conflict markers in `docs/handover_log.md`.
+- 6 unit tests for `quote_context` and 4 headless UI tests; 75 tests in the suite after the
+  changes, all passing. Changes are delivered as files for A to merge (no direct push):
+  `app.py`, `src/repcheck/text_utils.py`, `tests/test_app_ui.py`, `tests/test_text_utils.py`,
+  `README.md`, `docs/handover_log.md`, this file.
+
+### AI usage statement (Du Yunhe)
+- For the interface and handover work I used an AI coding assistant (Claude, Anthropic) as a pair
+  programmer. It drafted the two `app.py` features, the `quote_context` helper, the ten new tests,
+  my `docs/handover_log.md` entry and the first draft of this section. I set the acceptance
+  criteria (the viewer must use the verifier's normalization and a ~200-character window; a
+  fingerprint mismatch must warn; restored decisions must survive re-rendering) and verified every
+  claim by running the code: the 75 passing tests come from `pytest -q`, the restored-decision and
+  mismatch-warning flows from headless `AppTest` runs, and the README findings from an actual
+  fresh-venv install. All AI-written code and prose were read, executed and edited before being
+  handed over, and the copyrighted paper PDF stays local and is never committed.
 
 ## Zhou Zhenyu (F) — result check, presentation and live demo
 - Added `convert_esttab_csv` in `result_export.py`: converts Stata `esttab` output (standard errors in
