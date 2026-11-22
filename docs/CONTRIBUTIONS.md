@@ -122,7 +122,7 @@ I used OpenAI Codex to help prepare experiment commands, draft the optional v2 p
   from `pytest -q`, the restore and warning flows from headless AppTest runs, and the two README
   problems from a fresh-venv install guided only by the README.
 
-## Zhou Zhenyu (F) — result check, presentation and live demo
+## Zhou Zhenyu (F，21358187) — result check, presentation and live demo
 - Added `convert_esttab_csv` in `result_export.py`: converts Stata `esttab` output (standard errors in
   parentheses) to the results CSV, with tests and `examples/inputs/f_esttab_sample.csv`.
 - Added two diagnosis rules in `comparator.py`: standard errors that differ by more than 25%
