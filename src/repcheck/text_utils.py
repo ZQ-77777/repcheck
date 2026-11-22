@@ -65,6 +65,64 @@ def partial_ratio(needle: str, haystack: str) -> float:
     return best
 
 
+def quote_context(page_text: str, quote: str, width: int = 200) -> str | None:
+    """A ~`width`-character window of `page_text` around the first match of `quote`,
+    with the matched span wrapped in [[ ]]. Matching uses the same normalization as
+    the verifier (hyphen joins, lost word spaces, curly quotes), so the UI shows the
+    same span the check accepted. None if the quote cannot be located on the page."""
+    n = normalize_for_match(quote)
+    if not n:
+        return None
+    cleaned, norm, idx = _norm_with_index(page_text)
+    start_i = end_i = None
+    pos = norm.find(n)
+    if pos >= 0:
+        start_i, end_i = idx[pos], idx[pos + len(n) - 1]
+    else:
+        # same fallback as partial_ratio: text whose word spaces were lost
+        n_c = re.sub(r"\s+", "", n)
+        if len(n_c) < 15:
+            return None
+        compact = [(c, i) for c, i in zip(norm, idx) if c != " "]
+        p = "".join(c for c, _ in compact).find(n_c)
+        if p < 0:
+            return None
+        start_i, end_i = compact[p][1], compact[p + len(n_c) - 1][1]
+    lo = max(0, start_i - width // 2)
+    hi = min(len(cleaned), end_i + 1 + width // 2)
+    return f"{cleaned[lo:start_i]}[[{cleaned[start_i:end_i + 1]}]]{cleaned[end_i + 1:hi]}"
+
+
+def _norm_with_index(text: str) -> tuple[str, str, list[int]]:
+    """clean_text(text), its normalize_for_match form, and for each normalized char the
+    index of the cleaned char it came from (-1 for chars dropped by normalization)."""
+    cleaned = clean_text(text)
+    pairs = [(c, i) for i, c in enumerate(cleaned)]
+    # join words hyphenated at line ends (same rule as normalize_for_match)
+    joined, i = [], 0
+    while i < len(pairs):
+        c, idx = pairs[i]
+        if (c == "-" and i + 1 < len(pairs) and pairs[i + 1][0] == "\n"
+                and i > 0 and (pairs[i - 1][0].isalnum() or pairs[i - 1][0] == "_")
+                and i + 2 < len(pairs) and (pairs[i + 2][0].isalnum() or pairs[i + 2][0] == "_")):
+            i += 2
+            continue
+        joined.append((c, idx))
+        i += 1
+    # collapse whitespace runs to a single space (first char of the run is kept)
+    res, prev_ws = [], False
+    for c, idx in joined:
+        ws = c in " \t\n\r\f\v"
+        if ws:
+            if prev_ws:
+                continue
+            c, prev_ws = " ", True
+        else:
+            prev_ws = False
+        res.append((c, idx))
+    return cleaned, "".join(c for c, _ in res).lower(), [idx for _, idx in res]
+
+
 _NUM_CORE = re.compile(r"-?\d[\d,]*(?:\.\d+)?")
 
 
