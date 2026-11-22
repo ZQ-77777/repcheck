@@ -7,15 +7,28 @@ peer ratings are based on this file.
 - v0.1 code, tests, synthetic examples and documents were drafted by Zhang Qi with AI assistance (Claude,
   Anthropic) as a starting point. Each module then has an owner who reviews, tests and extends it.
 
-## Zhang Qi (A) — coordination and integration
-- Design of the two-stage tool and the interfaces in `schemas.py`; integration and releases.
-- Real-paper case study (Jayaraman & Wu 2020): fixed run-together words in tightly typeset PDFs
-  (false quote alarms 10 → 0 on Tables 2–3); added the "Subsamples / column structure" field after the
-  paper showed it was missing; connected the HKUST GenAI API.
-- Final integration before submission: README, slides, demo fixes (edited items stay open in the
-  interface; a year-quarter fixed effect is one term in the code skeleton, with a test).
+## Zhang Qi (A, 22338115) — design, coordination and integration
+- Chose the topic and designed the two-stage tool (specification checklist, then result check), the
+  module pipeline and the shared interfaces in `schemas.py`; built the v0.1 baseline with tests,
+  synthetic examples, mock mode and the HKUST GenAI API connection (header and temperature handling).
+- Set up the repository (CI workflow, PR template, `.gitattributes`), split the work into six roles,
+  wrote the team guides and timeline, reviewed and merged pull requests, and integrated releases.
+- Real-paper case study (Jayaraman & Wu 2020): found and fixed run-together words in tightly typeset
+  PDFs (false quote alarms 10 → 0 on Tables 2–3); added the "Subsamples / column structure" field after
+  the paper showed it was missing; drafted the Table 3 gold answers from the paper text for D to verify.
+- Final integration before submission: README, slides and demo runbook; demo fixes (edited items stay
+  open in the interface; a year-quarter fixed effect is one term in the code skeleton, with a test).
+- Handover H2: handed the live demo to Zhou Zhenyu (`docs/handover_log.md`).
 
-## Tang Yunshu (B) — PDF parsing and table locating
+### AI usage statement (Zhang Qi)
+- I used Claude (Anthropic) as a coding and writing assistant. It drafted the v0.1 baseline code,
+  tests and synthetic example papers, the later fixes listed above, the README, the slides and the
+  team guides. I set the design and scope, ran everything on my own Windows machine and on the real
+  paper, decided what to keep, and checked every reported number against the program's output.
+  Model answers used in the project come from the HKUST GenAI API; the copyrighted paper PDF stays
+  local and is never committed.
+
+## Tang Yunshu (B, 21275921) — PDF parsing and table locating
 - Root-caused the missing JW2020 Table 4: the page is printed sideways (95% of its characters are
   rotated 90°), so pdfplumber returned the caption reversed as `4elbaT` and no caption line matched.
   Sideways pages are now re-flowed from character boxes, one block per rotation angle, in
@@ -38,7 +51,7 @@ peer ratings are based on this file.
 - Wrote the model comparison report and slide data. Scored all 34 successful checklists against D's reference answers and rechecked scores and quote statuses after B's parser update on November 21, 2026.
 - Pull requests: #1, #8.
 
-## Xu Fanqi (D) — evaluation and baseline
+## Xu Fanqi (D, 21355721) — evaluation and baseline
 - Wrote the JW2020 gold answers against the published RFS PDF, independently of the drafter:
   `jw2020_table2_gold.json` from scratch (all 13 fields, including the Model 1-8 column
   structure and the 3,456-forecast SF_CAR subsample) and line-by-line verification of
@@ -54,9 +67,23 @@ peer ratings are based on this file.
 - Baseline comparison for slide 9 (`scripts/baseline_experiment.py`, `docs/BASELINE.md`):
   raw gpt-4.1-mini and raw deepseek given the full paper — content is mostly right but one
   invents the winsorization answer and neither offers a single verifiable quote.
-- Handover H1: ran the tool on an unseen NBER paper using only B's module docstrings and tests
-  (`docs/handover_log.md`).
-- Pull requests: #3
+- Handover H1: ran the full evaluation on an unseen paper (NBER WP 32161) using only B's module
+  docstring and tests, then re-checked after B's rotated-page fix landed (no regression; JW2020
+  Table 4 confirmed found).
+- Pull requests: #3, #4, #7
+
+### AI usage statement (Xu Fanqi)
+- For the evaluation and baseline part I used an AI coding assistant (CodeBuddy, GLM) as a pair
+  programmer. It drafted the two experiment scripts (`scripts/threshold_experiment.py`,
+  `scripts/baseline_experiment.py`), assembled the hand-written paraphrase and invented quote
+  sets, produced the first drafts of `docs/BASELINE.md`, `docs/DESIGN.md` (threshold section),
+  `docs/EVALUATION_GUIDE.md` and my CONTRIBUTIONS entry, and fixed two path-handling bugs it had
+  introduced in the threshold script. I supplied the published JW2020 PDF, wrote and verified
+  every field of the two gold answers against the paper (all 33 factual citations were checked
+  programmatically against the stated PDF pages), scored both baseline transcripts item by item
+  against the gold, re-ran every number after teammates' PRs merged, and read, executed and
+  edited everything before opening each pull request. All reported figures come from running
+  the code, not from the model, and the copyrighted paper PDF stays local and is never committed.
 
 ## Du Yunhe (E) — integration, debugging and paper cross-checks
 - Helped integrate and debug the merged modules.

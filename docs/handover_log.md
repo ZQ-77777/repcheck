@@ -6,7 +6,11 @@ Plan:
 - H1 (done): Tang Yunshu (B) → Xu Fanqi (D) — D runs the tool on an unseen paper using only B's module docstrings and tests.
 - H2: Zhang Qi → Zhou Zhenyu — Zhou runs the whole demo on Zhang Qi's laptop using only the README and the script.
 
+<<<<<<< HEAD
 ### H1: Tang Yunshu (B) → Xu Fanqi (D), 2026-11-19
+=======
+### H1: B → D, 2026-11-19
+>>>>>>> 3ad900c83ade00f30e2a7bdcfcba7ef62a33b8f4
 - Task: Run the full evaluation on a paper the tool had never seen (Jha, Qian, Weber & Yang 2024,
   "ChatGPT and Corporate Policies", NBER WP 32161, open access; 17 tables, tables at the end of
   a 70-page PDF), using only B's module docstrings (`table_locator.py`) and tests
@@ -34,6 +38,7 @@ Plan:
   11 verified / 2 missing; checklist values, statuses and quotes identical) — the sideways-page
   changes are backward compatible. Also confirmed on JW2020: Table 4 (printed sideways) now
   appears in `cli.py tables`, closing the known issue of 2026-11-16.
+<<<<<<< HEAD
 
 ### H2: Zhang Qi → Zhou Zhenyu, 2026-11-__
 - Task: run the full demo (JW2020 Table 3, then Example 1) on Zhang Qi's laptop using only the README and the script.
@@ -41,3 +46,5 @@ Plan:
 - What made it easy:
 - What made it hard:
 - Change made afterwards:
+=======
+>>>>>>> 3ad900c83ade00f30e2a7bdcfcba7ef62a33b8f4
