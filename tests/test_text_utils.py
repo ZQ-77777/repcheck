@@ -1,7 +1,43 @@
 import unittest
 
 from helpers import ROOT  # noqa: F401  (sets sys.path)
-from repcheck.text_utils import clean_text, normalize_for_match, number_in_text, partial_ratio
+from repcheck.text_utils import (clean_text, normalize_for_match, number_in_text,
+                                 partial_ratio, quote_context)
+
+
+class QuoteContextTest(unittest.TestCase):
+    PAGE = ("Sample selection.  To mitigate outliers, all continuous variables are winsorized\n"
+            "at the 1st and 99th percentiles. Firms are ranked on continu-\nous closing spreads.")
+
+    def test_marks_the_matched_span(self):
+        out = quote_context(self.PAGE, "variables are winsorized at the 1st")
+        self.assertIsNotNone(out)
+        self.assertIn("[[", out) and self.assertIn("]]", out)
+        matched = out.split("[[", 1)[1].split("]]", 1)[0]
+        self.assertEqual(normalize_for_match(matched), normalize_for_match("variables are winsorized at the 1st"))
+
+    def test_window_is_about_200_characters(self):
+        long_page = " ".join(f"word{i}" for i in range(200))
+        out = quote_context(long_page, "word100 word101 word102", width=200)
+        self.assertLessEqual(len(out.replace("[[", "").replace("]]", "")), 320)
+
+    def test_matches_quotes_with_ligatures_and_curly_quotes(self):
+        page = "The ﬁrm’s leverage is measured as total debt over assets."
+        self.assertIsNotNone(quote_context(page, "firm's leverage is measured"))
+
+    def test_matches_quote_across_a_hyphenated_line_break(self):
+        out = quote_context(self.PAGE, "continuous closing spreads")
+        self.assertIsNotNone(out)
+        self.assertIn("continu-", out)          # the page text is shown as printed
+        self.assertIn("]]", out)
+
+    def test_matches_tightly_spaced_text(self):
+        page = "Thedependentvariableiscapexadjustments(CAPEX_ADJ)definedasthepercentagedeviation"
+        out = quote_context(page, "dependent variable is capex adjustments")
+        self.assertIsNotNone(out)
+
+    def test_returns_none_for_an_absent_quote(self):
+        self.assertIsNone(quote_context(self.PAGE, "the CEO is paid in bitcoin"))
 
 
 class TextUtilsTest(unittest.TestCase):
