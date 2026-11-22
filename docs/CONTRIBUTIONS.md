@@ -106,15 +106,14 @@ peer ratings are based on this file.
   `README.md`, `docs/handover_log.md`, this file.
 
 ### AI usage statement (Du Yunhe)
-- For the interface and handover work I used an AI coding assistant (Claude, Anthropic) as a pair
-  programmer. It drafted the two `app.py` features, the `quote_context` helper, the ten new tests,
-  my `docs/handover_log.md` entry and the first draft of this section. I set the acceptance
-  criteria (the viewer must use the verifier's normalization and a ~200-character window; a
-  fingerprint mismatch must warn; restored decisions must survive re-rendering) and verified every
-  claim by running the code: the 75 passing tests come from `pytest -q`, the restored-decision and
-  mismatch-warning flows from headless `AppTest` runs, and the README findings from an actual
-  fresh-venv install. All AI-written code and prose were read, executed and edited before being
-  handed over, and the copyrighted paper PDF stays local and is never committed.
+- WorkBuddy produced the bulk of the code: the `quote_context` helper, both `app.py`
+  features, the ten tests, my `docs/handover_log.md` entry and the first draft of this paragraph.
+  My contribution was the spec and the verification. I required up front that the viewer locate
+  quotes through the verifier's own normalization within ~200 characters, that a fingerprint
+  mismatch stop and warn instead of applying silently, and that restored decisions survive a
+  re-render — then checked each behavior myself. Every number comes from actual runs: 75 tests
+  from `pytest -q`, the restore and warning flows from headless AppTest runs, and the two README
+  problems from a fresh-venv install guided only by the README.
 
 ## Zhou Zhenyu (F) — result check, presentation and live demo
 - Added `convert_esttab_csv` in `result_export.py`: converts Stata `esttab` output (standard errors in
