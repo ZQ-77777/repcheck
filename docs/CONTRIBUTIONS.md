@@ -36,7 +36,7 @@ peer ratings are based on this file.
 - Wrote the model comparison report and slide data. Scored all 34 successful checklists against D's reference answers and rechecked scores and quote statuses after B's parser update on November 21, 2026.
 - Pull requests: #1, #8.
 
-## Member D — evaluation and baseline
+## XU Fanqi(21355721) — evaluation and baseline
 - Wrote the JW2020 gold answers against the published RFS PDF, independently of the drafter:
   `jw2020_table2_gold.json` from scratch (all 13 fields, including the Model 1-8 column
   structure and the 3,456-forecast SF_CAR subsample) and line-by-line verification of
@@ -52,7 +52,23 @@ peer ratings are based on this file.
 - Baseline comparison for slide 9 (`scripts/baseline_experiment.py`, `docs/BASELINE.md`):
   raw gpt-4.1-mini and raw deepseek given the full paper — content is mostly right but one
   invents the winsorization answer and neither offers a single verifiable quote.
-- Pull requests: #3
+- Handover H1: ran the full evaluation on an unseen paper (NBER WP 32161) using only B's module
+  docstring and tests, then re-checked after B's rotated-page fix landed (no regression; JW2020
+  Table 4 confirmed found).
+- Pull requests: #3, #4, #7
+
+## AI usage statement (XU Fanqi)
+- For the evaluation and baseline part I used an AI coding assistant (CodeBuddy, GLM) as a pair
+  programmer. It drafted the two experiment scripts (`scripts/threshold_experiment.py`,
+  `scripts/baseline_experiment.py`), assembled the hand-written paraphrase and invented quote
+  sets, produced the first drafts of `docs/BASELINE.md`, `docs/DESIGN.md` (threshold section),
+  `docs/EVALUATION_GUIDE.md` and my CONTRIBUTIONS entry, and fixed two path-handling bugs it had
+  introduced in the threshold script. I supplied the published JW2020 PDF, wrote and verified
+  every field of the two gold answers against the paper (all 33 factual citations were checked
+  programmatically against the stated PDF pages), scored both baseline transcripts item by item
+  against the gold, re-ran every number after teammates' PRs merged, and read, executed and
+  edited everything before opening each pull request. All reported figures come from running
+  the code, not from the model, and the copyrighted paper PDF stays local and is never committed.
 
 ## Member E — interface
 - Pull requests:
